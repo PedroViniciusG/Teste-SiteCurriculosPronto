@@ -237,8 +237,16 @@
                 </div>
             </main>
 
+            <!-- Botão exibido somente em celulares para abrir a prévia em uma camada separada. -->
+            <button class="mobile-preview-trigger" id="btn-open-mobile-preview" type="button" aria-controls="mobile-preview-overlay" aria-expanded="false">
+                Visualizar prévia
+            </button>
+
             <!-- Painel direito: prévia A4 atualizada em tempo real. -->
-            <aside class="preview-container" aria-label="Prévia do currículo">
+            <aside class="preview-container" id="preview-container" aria-label="Prévia do currículo">
+                <button class="mobile-preview-close" id="btn-close-mobile-preview" type="button" aria-label="Fechar prévia">
+                    Fechar prévia
+                </button>
                 <article class="a4-sheet" id="cv-preview">
                     <header class="cv-header-block">
                         <h1 id="cv-nome">Seu Nome Completo</h1>

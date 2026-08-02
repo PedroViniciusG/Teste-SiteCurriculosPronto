@@ -70,3 +70,94 @@
         grid-row: auto;
     }
 }
+
+
+/* =========================================================
+   PRÉVIA MOBILE EM CAMADA
+   No celular, a folha não fica mais empilhada abaixo do formulário.
+   O usuário abre a prévia somente quando desejar.
+   ========================================================= */
+.mobile-preview-trigger,
+.mobile-preview-close {
+    display: none;
+}
+
+@media screen and (max-width: 860px) {
+    body.mobile-preview-open {
+        overflow: hidden;
+    }
+
+    .mobile-preview-trigger {
+        display: block;
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 80;
+        padding: 13px 18px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 8px;
+        background: #fff;
+        color: #09090b;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        box-shadow: 0 12px 30px rgba(0,0,0,.35);
+        cursor: pointer;
+    }
+
+    .preview-container {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100dvh;
+        min-height: 0;
+        padding: 68px 14px 24px;
+        overflow: auto;
+        background: rgba(12,12,15,.98);
+        overscroll-behavior: contain;
+    }
+
+    .preview-container.mobile-preview-visible {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .mobile-preview-close {
+        display: block;
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 110;
+        padding: 10px 14px;
+        border: 1px solid var(--border-premium);
+        border-radius: 7px;
+        background: #1c1c21;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    .preview-container .a4-sheet {
+        transform: scale(var(--mobile-preview-scale, .58));
+        transform-origin: top left;
+        margin: 0;
+        flex-shrink: 0;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .preview-container .a4-sheet {
+        --mobile-preview-scale: .56;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .preview-container .a4-sheet {
+        --mobile-preview-scale: .49;
+    }
+}

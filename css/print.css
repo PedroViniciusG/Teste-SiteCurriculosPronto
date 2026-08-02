@@ -112,3 +112,17 @@ body {
     grid-column: 2 / 4 !important;
     grid-row: 2 !important;
 }
+
+
+/*
+ * O modelo criativo utiliza uma faixa colorida que deve encostar nas bordas
+ * da folha. A regra geral de 45px de padding criava uma moldura branca.
+ */
+.a4-sheet.modelo-criativo {
+    padding: 0 !important;
+}
+
+.a4-sheet.modelo-criativo .cv-header-block,
+.a4-sheet.modelo-criativo .cv-left-col {
+    margin-left: 0 !important;
+}

@@ -33,6 +33,29 @@
         byId("btn-copy-pix")?.addEventListener("click", App.payment.copyPix);
         byId("btn-simulate-payment")?.addEventListener("click", App.payment.simulateApproval);
         byId("btn-print")?.addEventListener("click", App.print.open);
+
+        // No celular, a prévia é aberta em uma camada para não ficar
+        // empilhada abaixo do formulário.
+        const previewContainer = byId("preview-container");
+        const openPreviewButton = byId("btn-open-mobile-preview");
+        const closePreviewButton = byId("btn-close-mobile-preview");
+
+        function setMobilePreview(open) {
+            previewContainer?.classList.toggle("mobile-preview-visible", open);
+            document.body.classList.toggle("mobile-preview-open", open);
+            openPreviewButton?.setAttribute("aria-expanded", String(open));
+        }
+
+        openPreviewButton?.addEventListener("click", () => setMobilePreview(true));
+        closePreviewButton?.addEventListener("click", () => setMobilePreview(false));
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setMobilePreview(false);
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 860) setMobilePreview(false);
+        });
     }
 
     function init() {
