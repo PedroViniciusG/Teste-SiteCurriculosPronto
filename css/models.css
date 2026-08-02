@@ -1,0 +1,184 @@
+/* =========================================================
+   BOTÕES E MODELOS REAIS DO CURRÍCULO
+   Os estilos abaixo correspondem às miniaturas da vitrine.
+   ========================================================= */
+.btn-modelo-classico { border-color:#3f3f46; background:#16161a; }
+.btn-modelo-moderno { border-color:#334e68; background:#111c24; color:#b9ddf7; }
+.btn-modelo-minimalista { border-color:#737373; background:#181818; color:#f5f5f5; }
+.btn-modelo-executivo { border-color:#78716c; background:#1c1917; color:#e7e5e4; }
+.btn-modelo-criativo { border-color:#7c3aed; background:#201536; color:#ddd6fe; }
+.btn-modelo-elegante { border-color:#059669; background:#0c241d; color:#a7f3d0; }
+
+/* ---------------- CLÁSSICO ----------------
+   A base de preview.css já reproduz a miniatura clássica:
+   cabeçalho superior, foto e dados à esquerda, conteúdo à direita.
+   ------------------------------------------ */
+
+/* ---------------- MODERNO ----------------
+   Cabeçalho azul-petróleo e coluna lateral cinza-clara.
+   ----------------------------------------- */
+.modelo-moderno .cv-header-block {
+    margin:-45px -45px 25px;
+    padding:30px 45px 22px;
+    border:0;
+    background:#26384b;
+    color:#fff;
+}
+.modelo-moderno .cv-header-block h1 { color:#fff; letter-spacing:.02em; }
+.modelo-moderno .cv-header-block p { color:#9ed7ff; }
+.modelo-moderno .cv-left-col {
+    margin:-25px 0 -45px -45px;
+    padding:25px 20px 45px 45px;
+    border-right:0;
+    background:#f1f5f8;
+}
+.modelo-moderno .cv-section-main h2,
+.modelo-moderno .cv-section-aside h2 { color:#26384b; border-color:#b9c8d4; }
+
+/* ---------------- MINIMALISTA ----------------
+   Cabeçalho central, resumo pessoal no topo e corpo em coluna única.
+   --------------------------------------------- */
+.modelo-minimalista .cv-header-block {
+    margin-bottom:22px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+.modelo-minimalista .cv-columns-layout { flex-direction:column; gap:24px; }
+.modelo-minimalista .cv-left-col {
+    width:100%; flex:none;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px;
+    margin:0;
+    padding:0 0 18px;
+    border-right:0;
+    border-bottom:1px dashed #ccc;
+}
+.modelo-minimalista .cv-photo-area { margin:0 auto; }
+.modelo-minimalista .cv-section-aside { margin:0; }
+.modelo-minimalista .cv-right-col { width:100%; }
+.modelo-minimalista .cv-section-main h2 { border:0; color:#666; letter-spacing:.02em; }
+.modelo-minimalista.tem-foto .cv-left-col {
+    grid-template-columns:110px minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:auto auto;
+    align-items:start;
+}
+.modelo-minimalista.tem-foto .cv-photo-area { grid-column:1; grid-row:1 / span 2; }
+.modelo-minimalista.tem-foto .cv-contact-block { grid-column:2; grid-row:1; }
+.modelo-minimalista.tem-foto .cv-skills-block { grid-column:3; grid-row:1; }
+.modelo-minimalista.tem-foto .cv-languages-block { grid-column:2 / 4; grid-row:2; }
+
+/* ---------------- EXECUTIVO ----------------
+   Visual formal, conteúdo em uma coluna e contato horizontal.
+   ------------------------------------------- */
+.modelo-executivo { padding:45px 62px; }
+.modelo-executivo .cv-header-block {
+    margin-bottom:12px;
+    padding:12px 0;
+    border-top:3px double #20242c;
+    border-bottom:3px double #20242c;
+    text-align:center;
+}
+.modelo-executivo .cv-header-block h1 {
+    font-family:Georgia,"Times New Roman",serif;
+    letter-spacing:.08em;
+}
+.modelo-executivo .cv-columns-layout { flex-direction:column; gap:10px; }
+.modelo-executivo .cv-left-col {
+    width:100%; flex:none;
+    display:flex; align-items:flex-start; justify-content:center; flex-wrap:wrap;
+    gap:18px;
+    padding:0 0 10px;
+    border:0;
+    text-align:center;
+}
+.modelo-executivo .cv-photo-area { width:76px; height:76px; margin:0; }
+.modelo-executivo .cv-section-aside { margin:0; min-width:130px; }
+.modelo-executivo .cv-section-aside h2 { border:0; margin:0 0 3px; }
+.modelo-executivo .cv-section-aside ul { line-height:1.45; }
+.modelo-executivo .cv-right-col { width:100%; }
+.modelo-executivo .cv-section-main h2 {
+    font-family:Georgia,"Times New Roman",serif;
+    border-bottom:1px solid #737373;
+    letter-spacing:.04em;
+}
+
+/* ---------------- CRIATIVO ----------------
+   Faixa roxa lateral integral e conteúdo claro à direita.
+   Usa display:contents para que as colunas internas participem do grid.
+   ----------------------------------------- */
+.modelo-criativo {
+    display:grid;
+    grid-template-columns:205px minmax(0,1fr);
+    grid-template-rows:auto 1fr;
+    padding:0;
+}
+.modelo-criativo .cv-header-block {
+    grid-column:1; grid-row:1;
+    margin:0;
+    padding:42px 28px 18px;
+    border:0;
+    background:#36235d;
+    color:#fff;
+}
+.modelo-criativo .cv-header-block h1 { color:#fff; font-size:21px; }
+.modelo-criativo .cv-header-block p { color:#eadfff; font-size:11px; }
+.modelo-criativo .cv-columns-layout { display:contents; }
+.modelo-criativo .cv-left-col {
+    grid-column:1; grid-row:2;
+    width:auto; min-height:100%;
+    padding:0 28px 42px;
+    border:0;
+    background:#36235d;
+    color:#fff;
+}
+.modelo-criativo .cv-photo-area { border-color:rgba(255,255,255,.4); }
+.modelo-criativo .cv-section-aside h2 {
+    color:#fff;
+    border-color:rgba(255,255,255,.28);
+}
+.modelo-criativo .cv-section-aside ul { color:#eee8fa; }
+.modelo-criativo .cv-right-col {
+    grid-column:2; grid-row:1 / span 2;
+    min-width:0;
+    padding:42px 38px;
+}
+.modelo-criativo .cv-section-main h2 { color:#6c36b5; border-color:#d9c7ef; }
+
+/* ---------------- ELEGANTE ----------------
+   Cabeçalho com detalhe verde, contato horizontal e conteúdo em uma coluna.
+   ----------------------------------------- */
+.modelo-elegante { padding:45px 60px; }
+.modelo-elegante .cv-header-block {
+    margin-bottom:14px;
+    padding:3px 0 3px 15px;
+    border:0;
+    border-left:5px solid #0f8d6c;
+}
+.modelo-elegante .cv-header-block h1 {
+    color:#075c49;
+    font-family:Georgia,"Times New Roman",serif;
+}
+.modelo-elegante .cv-header-block p { color:#46665e; }
+.modelo-elegante .cv-columns-layout { flex-direction:column; gap:12px; }
+.modelo-elegante .cv-left-col {
+    width:100%; flex:none;
+    display:flex; align-items:flex-start; justify-content:center; flex-wrap:wrap;
+    gap:20px;
+    padding:9px 0;
+    border:0;
+    border-top:1px solid #b7d8cf;
+    border-bottom:1px solid #b7d8cf;
+    text-align:center;
+}
+.modelo-elegante .cv-photo-area { width:76px; height:76px; margin:0; }
+.modelo-elegante .cv-section-aside { margin:0; min-width:125px; }
+.modelo-elegante .cv-section-aside h2 { margin:0 0 3px; border:0; color:#08745a; }
+.modelo-elegante .cv-right-col { width:100%; }
+.modelo-elegante .cv-section-main h2 { color:#08745a; border-color:#aad1c7; }
+
+/* Em impressão, mantém exatamente a composição escolhida. */
+@media print {
+    .modelo-criativo { display:grid !important; }
+    .modelo-criativo .cv-columns-layout { display:contents !important; }
+}

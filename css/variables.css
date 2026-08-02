@@ -1,0 +1,27 @@
+/* =========================================================
+   VARIÁVEIS GLOBAIS
+   Altere aqui cores, larguras e medidas principais do projeto.
+   ========================================================= */
+:root {
+    --bg-workspace: #1c1c1f;
+    --bg-app: #0a0a0c;
+    --bg-card: #121215;
+    --bg-input: #0a0a0c;
+    --border-premium: #26262b;
+    --border-light: #e5e7eb;
+    --text-main: #f3f4f6;
+    --text-muted: #a1a1aa;
+    --accent: #ffffff;
+    --accent-hover: #e4e4e7;
+    --error: #ef4444;
+    --success: #16a34a;
+
+    --radius-sm: 6px;
+    --radius-md: 9px;
+    --radius-lg: 12px;
+
+    --sidebar-width: 480px;
+    --sheet-width: 595px;
+    --sheet-height: 842px;
+    --sheet-padding: 45px;
+}

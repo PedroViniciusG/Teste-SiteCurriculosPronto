@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Versão de teste do gerador de currículo profissional com pagamento simulado e download em PDF." />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="author" content="Currículos 1R$" />
+        <meta name="theme-color" content="#121215" />
+        <meta name="application-name" content="Currículos 1R$" />
+
+        <title>Teste do Gerador de Currículo | Currículos 1R$</title>
+        
+        <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+        <link rel="manifest" href="manifest.webmanifest" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:site_name" content="Currículos 1R$" />
+        <meta property="og:title" content="Crie seu currículo profissional em PDF por R$ 1" />
+        <meta property="og:description" content="Preencha seus dados, escolha um modelo e baixe seu currículo profissional em PDF." />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="assets/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Crie seu currículo profissional em PDF por R$ 1" />
+        <meta name="twitter:description" content="Modelo clássico, preenchimento simples e pagamento simulado para testes." />
+        <meta name="twitter:image" content="assets/og-image.png" />
+
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Currículos 1R$",
+          "url": "",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Qualquer navegador moderno",
+          "description": "Gerador de currículo profissional em versão de teste com exportação em PDF.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "BRL"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Currículos 1R$",
+            "url": ""
+          }
+        }
+        </script>
+        <!-- CSS separado por responsabilidade para facilitar manutenção. -->
+        <link rel="stylesheet" href="css/variables.css" />
+        <link rel="stylesheet" href="css/base.css" />
+        <link rel="stylesheet" href="css/layout.css" />
+        <link rel="stylesheet" href="css/components.css" />
+        <link rel="stylesheet" href="css/forms.css" />
+        <link rel="stylesheet" href="css/preview.css" />
+        <link rel="stylesheet" href="css/models.css" />
+        <link rel="stylesheet" href="css/payment.css" />
+        <link rel="stylesheet" href="css/responsive.css" />
+        <link rel="stylesheet" href="css/print.css" media="print" />
+    </head>
+
+    <body>
+        <a class="skip-link" href="#interactive-content">Ir para o conteúdo principal</a>
+        <div class="app-container">
+            <!-- Painel esquerdo: navegação e formulários. -->
+            <main class="form-sidebar" aria-label="Editor do currículo">
+                <div class="sidebar-content-wrapper">
+                    <header class="app-header is-hidden" id="app-header">
+                        <div class="brand-row">
+                            <span class="brand-logo">Currículos <span>1R$</span></span>
+                            <button
+                                class="btn-reset-app"
+                                id="btn-open-reset"
+                                type="button"
+                            >
+                                Reiniciar
+                            </button>
+                        </div>
+
+                        <div class="progress-container">
+                            <p id="step-indicator">Etapa 1 de 9</p>
+                            <div class="progress-bar" aria-hidden="true">
+                                <div class="progress-fill" id="progress"></div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Confirmação visual antes de apagar o rascunho. -->
+                    <section
+                        class="confirm-notice-box is-hidden"
+                        id="reset-confirm-box"
+                        aria-live="polite"
+                    >
+                        <p>Deseja realmente limpar todos os campos e começar do zero?</p>
+                        <div class="confirm-box-actions">
+                            <button class="btn-confirm-yes" id="btn-confirm-reset" type="button">
+                                Sim, reiniciar
+                            </button>
+                            <button class="btn-confirm-no" id="btn-cancel-reset" type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- O conteúdo de cada etapa é gerado pelo JavaScript. -->
+                    <section class="step-box" id="form-step-box">
+                        <h2 class="is-hidden" id="field-label"></h2>
+                        <div id="interactive-content">
+                            <!-- Conteúdo inicial estático: ajuda buscadores e usuários sem JavaScript. -->
+                            <div class="welcome-screen">
+                                <span class="brand-logo welcome-brand">Currículos <span>1R$</span></span>
+                                <h1>Crie seu currículo profissional em PDF</h1>
+                                <h2>Versão de teste para amigos</h2>
+                                <p>Escolha entre seis modelos, preencha seus dados e teste todo o fluxo sem cobrança real.</p>
+                                <div class="test-mode-badge">Teste público • nenhum valor será cobrado</div>
+                                <div class="welcome-action-box">
+                                    <button class="btn-primary-lg" id="btn-start-new-static" type="button">Criar novo currículo</button>
+                                </div>
+                                <nav class="welcome-links" aria-label="Conteúdo útil">
+                                    <a href="pages/modelos-de-curriculo.html">Ver modelos</a>
+                                    <a href="pages/como-fazer-um-curriculo.html">Como fazer um currículo</a>
+                                    <a href="pages/curriculo-primeiro-emprego.html">Primeiro emprego</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Etapa fixa de escolha de modelos. -->
+                    <section
+                        class="model-selection step-box is-hidden"
+                        id="box-escolha-modelo"
+                    >
+                        <h2>Tudo pronto!</h2>
+                        <p>Selecione o design que mais combina com você antes de avançar:</p>
+
+                        <div class="model-buttons" id="model-buttons">
+                            <button class="btn-secondary-lg btn-modelo-classico" data-model="padrao" type="button">
+                                Clássico (Padrão)
+                            </button>
+                            <button class="btn-secondary-lg btn-modelo-moderno" data-model="modelo-moderno" type="button">
+                                Moderno
+                            </button>
+                            <button class="btn-secondary-lg btn-modelo-minimalista" data-model="modelo-minimalista" type="button">
+                                Minimalista
+                            </button>
+                            <button class="btn-secondary-lg btn-modelo-executivo" data-model="modelo-executivo" type="button">
+                                Executivo
+                            </button>
+                            <button class="btn-secondary-lg btn-modelo-criativo" data-model="modelo-criativo" type="button">
+                                Criativo
+                            </button>
+                            <button class="btn-secondary-lg btn-modelo-elegante" data-model="modelo-elegante" type="button">
+                                Elegante
+                            </button>
+                        </div>
+
+                        <button class="btn-primary-lg full-width" id="btn-go-payment" type="button">
+                            Avançar para pagamento
+                        </button>
+                    </section>
+
+                    <!-- Etapa de pagamento e liberação do PDF. -->
+                    <section class="payment-container step-box is-hidden" id="box-pagamento">
+                        <div class="payment-panel" id="pay-intro">
+                            <span class="payment-eyebrow">Modo de demonstração</span>
+                            <h2>Seu currículo está pronto!</h2>
+                            <p>
+                                Teste o fluxo de pagamento e libere o PDF sem cobrança real.
+                            </p>
+                            <button class="btn-primary-lg full-width" id="btn-show-pix" type="button">
+                                Gerar pagamento de teste
+                            </button>
+                            <button class="btn-payment-back" id="btn-back-models" type="button">
+                                Voltar e trocar o modelo
+                            </button>
+                        </div>
+
+                        <div class="payment-panel is-hidden" id="pay-pix">
+                            <span class="payment-eyebrow">Pagamento simulado</span>
+                            <h2>Simule a aprovação</h2>
+                            <p>Nenhum valor será cobrado. Use o botão abaixo para simular a aprovação.</p>
+
+                            <div class="pix-qr-placeholder" aria-label="QR Code fictício para demonstração">
+                                <img class="pix-qr-image is-hidden" id="pix-qr-image" alt="QR Code PIX" />
+                                <span id="pix-qr-loading">Gerando QR Code...</span>
+                            </div>
+
+                            <div class="pix-copy-row">
+                                <input
+                                    id="pix-code"
+                                    type="text"
+                                    value=""
+                                    placeholder="Código de pagamento de teste"
+                                    readonly
+                                    aria-label="Código PIX"
+                                />
+                                <button id="btn-copy-pix" type="button" disabled>Copiar</button>
+                            </div>
+
+                            <p class="payment-status" id="payment-status" aria-live="polite">
+                                Preparando pagamento simulado...
+                            </p>
+
+                            <p class="payment-helper">
+                                Esta versão não processa dinheiro. O botão de simulação libera o PDF somente para testes.
+                            </p>
+
+                            <button class="btn-secondary-lg full-width btn-simulate-payment" id="btn-simulate-payment" type="button">
+                                Simular pagamento aprovado
+                            </button>
+                            <button class="btn-primary-lg full-width btn-download-pdf" id="btn-print" type="button" disabled>
+                                Aguardando simulação
+                            </button>
+                            <button class="btn-payment-back" id="btn-back-payment" type="button">
+                                Voltar
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Mensagens de validação e erros da aplicação. -->
+                    <div class="error-notice-box is-hidden" id="error-message-box" role="alert">
+                        <span id="error-message-text">Preencha os campos obrigatórios.</span>
+                    </div>
+
+                    <!-- Navegação padrão entre as etapas. -->
+                    <footer class="form-footer is-hidden" id="app-footer">
+                        <div class="button-group">
+                            <button class="btn-prev" id="btn-back" type="button">Voltar</button>
+                            <button class="btn-next" id="btn-advance" type="button">Avançar</button>
+                        </div>
+                    </footer>
+                </div>
+            </main>
+
+            <!-- Painel direito: prévia A4 atualizada em tempo real. -->
+            <aside class="preview-container" aria-label="Prévia do currículo">
+                <article class="a4-sheet" id="cv-preview">
+                    <header class="cv-header-block">
+                        <h1 id="cv-nome">Seu Nome Completo</h1>
+                        <p id="cv-cargo">Seu Cargo ou Profissão</p>
+                    </header>
+
+                    <div class="cv-columns-layout">
+                        <div class="cv-left-col">
+                            <div class="cv-photo-area is-hidden" id="preview-photo-bucket">
+                                <img id="preview-photo" src="" alt="Foto de perfil" />
+                            </div>
+
+                            <section class="cv-section-aside cv-contact-block">
+                                <h2>Contato</h2>
+                                <ul id="cv-contato-lista">
+                                    <li>Telefone</li>
+                                    <li>E-mail</li>
+                                    <li>Localização</li>
+                                </ul>
+                            </section>
+
+                            <section class="cv-section-aside cv-skills-block">
+                                <h2>Competências</h2>
+                                <ul id="cv-competencias-lista" class="bullet-list"></ul>
+                            </section>
+
+                            <section class="cv-section-aside cv-languages-block is-hidden" id="cv-idiomas-box">
+                                <h2>Idiomas</h2>
+                                <ul id="cv-idiomas" class="plain-list"></ul>
+                            </section>
+                        </div>
+
+                        <div class="cv-right-col">
+                            <section class="cv-section-main">
+                                <h2>Perfil Profissional</h2>
+                                <p id="cv-resumo">
+                                    Breve resumo de suas qualificações e objetivos de carreira.
+                                </p>
+                            </section>
+
+                            <section class="cv-section-main">
+                                <h2>Experiência Profissional</h2>
+                                <div id="cv-experiencias-container"></div>
+                            </section>
+
+                            <section class="cv-section-main">
+                                <h2>Formação Acadêmica</h2>
+                                <div id="cv-formacoes-container"></div>
+                            </section>
+
+                            <section class="cv-section-main is-hidden" id="cv-certificacoes-box">
+                                <h2>Certificações</h2>
+                                <div id="cv-certificacoes-container"></div>
+                            </section>
+
+                            <section class="cv-section-main is-hidden" id="cv-interesses-box">
+                                <h2>Áreas de Interesse</h2>
+                                <ul id="cv-interesses" class="plain-list"></ul>
+                            </section>
+                        </div>
+                    </div>
+                </article>
+            </aside>
+        </div>
+
+        <footer class="site-footer no-print">
+            <nav aria-label="Links institucionais">
+                <a href="pages/como-fazer-um-curriculo.html">Dicas</a>
+                <a href="pages/como-fazer-um-curriculo.html">Guia de currículo</a>
+                <a href="pages/politica-de-privacidade.html">Privacidade</a>
+                <a href="pages/termos-de-uso.html">Termos</a>
+                <a href="pages/politica-de-cookies.html">Cookies</a>
+                <a href="pages/contato.html">Contato</a>
+            </nav>
+            <p>© <span id="current-year"></span> Currículos 1R$. Todos os direitos reservados.</p>
+        </footer>
+
+        <noscript>
+            <div class="noscript-message">Ative o JavaScript para utilizar o gerador de currículo.</div>
+        </noscript>
+
+        <!-- Scripts clássicos em ordem de dependência. -->
+        <script src="js/core/config.js"></script>
+        <script src="js/core/utils.js"></script>
+        <script src="js/core/storage.js"></script>
+        <script src="js/core/state.js"></script>
+        <script src="js/ui/feedback.js"></script>
+        <script src="js/ui/preview.js"></script>
+        <script src="js/ui/forms.js"></script>
+        <script src="js/ui/steps.js"></script>
+        <script src="js/ui/payment.js"></script>
+        <script src="js/ui/print.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

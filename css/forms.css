@@ -1,0 +1,217 @@
+/* =========================================================
+   FORMULÁRIOS E LISTAS DO EDITOR
+   ========================================================= */
+.step-box {
+    margin-bottom: 15px;
+}
+
+#field-label {
+    margin-bottom: 25px;
+    color: var(--text-main);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.input-sub-group {
+    margin-bottom: 18px;
+}
+
+.input-sub-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.input-sub-group input,
+.input-sub-group textarea,
+.pix-copy-row input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border-premium);
+    border-radius: var(--radius-sm);
+    outline: none;
+    background: var(--bg-input);
+    color: #fff;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.input-sub-group input:focus,
+.input-sub-group textarea:focus,
+.pix-copy-row input:focus {
+    border-color: var(--accent);
+}
+
+.input-sub-group textarea {
+    min-height: 110px;
+    resize: none;
+}
+
+.input-sub-group input:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.date-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.editor-card {
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px solid var(--border-premium);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.checkbox-inline-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 20px;
+    margin: 4px 0 18px;
+    padding-left: 28px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.checkbox-inline-group input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-premium);
+    border-radius: 4px;
+    background: var(--bg-input);
+    transform: translateY(-50%);
+}
+
+.checkbox-inline-group input:checked ~ .checkmark {
+    border-color: var(--accent);
+    background: var(--accent);
+}
+
+.checkbox-inline-group input:checked ~ .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.btn-add-item,
+.btn-secondary-action {
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    background: #26262b;
+    color: #fff;
+    font-size: 12px;
+}
+
+.btn-add-item:hover,
+.btn-secondary-action:hover {
+    background: #323239;
+}
+
+.btn-secondary-action {
+    margin-top: 15px;
+}
+
+.added-items-list {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--border-premium);
+}
+
+.added-items-list:empty {
+    display: none;
+}
+
+.added-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 12px;
+    border: 1px solid var(--border-premium);
+    border-radius: var(--radius-sm);
+    background: #1c1c21;
+    font-size: 13px;
+}
+
+.item-actions-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit-item,
+.btn-remove-item {
+    border: 0;
+    background: transparent;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn-edit-item {
+    color: #60a5fa;
+}
+
+.btn-remove-item {
+    color: #f87171;
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: block;
+    padding: 35px;
+    border: 2px dashed var(--border-premium);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    color: var(--text-muted);
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.file-input-wrapper input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.additional-group + .additional-group {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--border-premium);
+}

@@ -1,0 +1,85 @@
+/* =========================================================
+   RESET E ELEMENTOS GLOBAIS
+   ========================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body,
+button,
+input,
+textarea {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background: var(--bg-app);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+.full-width {
+    width: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d0d11;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-premium);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+}
+
+/* Acessibilidade e elementos globais de navegação. */
+.skip-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: #000;
+    transform: translateY(-160%);
+}
+.skip-link:focus { transform: translateY(0); }
+.noscript-message {
+    position: fixed;
+    inset: auto 20px 20px;
+    z-index: 9999;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    background: #ef4444;
+    color: #fff;
+    text-align: center;
+}

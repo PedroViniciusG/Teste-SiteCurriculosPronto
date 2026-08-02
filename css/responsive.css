@@ -1,0 +1,72 @@
+/* =========================================================
+   RESPONSIVIDADE DA INTERFACE
+   Essas regras não são usadas na impressão.
+   ========================================================= */
+@media screen and (max-width: 1050px) {
+    .form-sidebar {
+        width: 420px;
+        padding: 28px;
+    }
+
+    .preview-container {
+        padding: 28px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .app-container {
+        display: block;
+    }
+
+    .form-sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        border-right: 0;
+        border-bottom: 1px solid var(--border-premium);
+    }
+
+    .sidebar-content-wrapper {
+        max-width: 520px;
+    }
+
+    .preview-container {
+        height: auto;
+        min-height: 100vh;
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .form-sidebar {
+        padding: 22px 18px;
+    }
+
+    .preview-container {
+        padding: 20px 12px;
+    }
+
+    .a4-sheet {
+        transform-origin: top left;
+    }
+
+    .date-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .added-item-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .modelo-minimalista.tem-foto .cv-left-col {
+        grid-template-columns: 110px 1fr;
+    }
+
+    .modelo-minimalista.tem-foto .cv-skills-block,
+    .modelo-minimalista.tem-foto .cv-languages-block {
+        grid-column: 2;
+        grid-row: auto;
+    }
+}

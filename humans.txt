@@ -1,0 +1,7 @@
+/* TEAM */
+Projeto: Currículos 1R$
+Contato: consulte /contato
+
+/* SITE */
+Idioma: Português do Brasil
+Tecnologias: HTML, CSS, JavaScript, Node.js, Express

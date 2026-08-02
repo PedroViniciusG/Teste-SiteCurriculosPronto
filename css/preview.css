@@ -1,0 +1,153 @@
+/* =========================================================
+   FOLHA A4 E CONTEÚDO DO CURRÍCULO
+   ========================================================= */
+.a4-sheet {
+    width: var(--sheet-width);
+    min-width: var(--sheet-width);
+    max-width: var(--sheet-width);
+    min-height: var(--sheet-height);
+    padding: var(--sheet-padding);
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    color: #000;
+}
+
+.cv-header-block {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #000;
+}
+
+.cv-header-block h1 {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+.cv-header-block p {
+    margin-top: 4px;
+    color: #555;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.cv-columns-layout {
+    display: flex;
+    flex: 1;
+    gap: 30px;
+}
+
+.cv-left-col {
+    width: 165px;
+    flex: 0 0 165px;
+    padding-right: 15px;
+    border-right: 1px solid var(--border-light);
+}
+
+.cv-right-col {
+    min-width: 0;
+    flex: 1;
+}
+
+.cv-photo-area {
+    width: 95px;
+    height: 95px;
+    margin-bottom: 22px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    border-radius: 50%;
+}
+
+.cv-photo-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cv-section-aside,
+.cv-section-main {
+    margin-bottom: 22px;
+}
+
+.cv-section-aside h2 {
+    margin-bottom: 8px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #000;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.cv-section-main h2 {
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.cv-section-aside ul,
+.cv-section-main p,
+.plain-list {
+    color: #333;
+    font-size: 11px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.cv-section-main p {
+    font-size: 11.5px;
+    line-height: 1.5;
+}
+
+.cv-section-aside ul,
+.plain-list {
+    list-style: none;
+}
+
+.cv-section-aside .bullet-list {
+    padding-left: 14px;
+    list-style: square;
+}
+
+.cv-item-render {
+    margin-bottom: 14px;
+}
+
+.cv-item-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 3px;
+    font-size: 11.5px;
+}
+
+.cv-item-meta span {
+    flex-shrink: 0;
+}
+
+.cv-item-institution {
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 11px;
+    font-style: italic;
+}
+
+.cv-item-description {
+    padding-left: 10px;
+    color: #333;
+    font-size: 11px !important;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.cv-empty-message {
+    color: #777 !important;
+    font-style: italic;
+}

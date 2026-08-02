@@ -1,0 +1,151 @@
+/* =========================================================
+   ETAPA DE PAGAMENTO
+   ========================================================= */
+.payment-panel {
+    padding: 24px 0;
+    text-align: center;
+}
+
+.payment-eyebrow {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.payment-panel h2 {
+    margin-bottom: 12px;
+    font-size: 21px;
+}
+
+.payment-panel > p {
+    margin-bottom: 22px;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.payment-panel strong {
+    color: #fff;
+}
+
+.btn-payment-back {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn-payment-back:hover {
+    color: #fff;
+}
+
+.pix-qr-placeholder {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 18px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 8px solid #fff;
+    border-radius: var(--radius-md);
+    background:
+        linear-gradient(45deg, #000 25%, transparent 25%) 0 0 / 16px 16px,
+        linear-gradient(-45deg, #000 25%, transparent 25%) 0 8px / 16px 16px,
+        linear-gradient(45deg, transparent 75%, #000 75%) 8px -8px / 16px 16px,
+        linear-gradient(-45deg, transparent 75%, #000 75%) -8px 0 / 16px 16px,
+        #fff;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    text-shadow: 0 1px 3px #000;
+}
+
+.pix-copy-row {
+    display: flex;
+    gap: 8px;
+}
+
+.pix-copy-row input {
+    min-width: 0;
+    padding: 11px;
+    font-size: 12px;
+}
+
+.pix-copy-row button {
+    padding: 0 16px;
+    border: 1px solid var(--border-premium);
+    background: #26262b;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+}
+
+.payment-helper {
+    margin: 12px 0 18px !important;
+    color: #71717a !important;
+    font-size: 10px !important;
+}
+
+.btn-download-pdf {
+    background: var(--success);
+    color: #fff;
+}
+
+.btn-download-pdf:hover {
+    background: #15803d;
+}
+
+
+/* QR Code real retornado pelo Mercado Pago. */
+.pix-qr-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #fff;
+}
+
+.payment-status {
+    margin: 14px 0 18px;
+    padding: 12px;
+    border: 1px solid var(--border-premium);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.025);
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.payment-status.is-approved {
+    border-color: rgba(22, 163, 74, 0.7);
+    background: rgba(22, 163, 74, 0.1);
+    color: #86efac;
+}
+
+.payment-status.is-error {
+    border-color: rgba(239, 68, 68, 0.7);
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+}
+
+.btn-download-pdf:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: #3f3f46;
+}
+
+/* Elementos exclusivos da demonstração estática. */
+.btn-simulate-payment { margin-bottom: 10px; border-color: #3b82f6; color: #bfdbfe; }
+.btn-simulate-payment:disabled { opacity: .65; cursor: default; }
+.test-mode-badge { margin: -14px 0 22px; padding: 8px 12px; border: 1px solid rgba(59,130,246,.35); border-radius: var(--radius-sm); background: rgba(59,130,246,.08); color: #bfdbfe; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
