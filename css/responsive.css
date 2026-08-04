@@ -179,12 +179,22 @@
         width: auto;
         min-height: 48px;
         padding: 13px 18px;
-        border-color: rgba(255,255,255,.28);
-        background: #f4f4f5;
+        border-color: #3a4352;
+        background: #1a202b;
+        color: #f4f7fb;
         box-shadow: 0 -12px 28px rgba(12,12,15,.72), 0 10px 24px rgba(0,0,0,.35);
     }
 
-    /* Evita que a última ação da etapa fique visualmente colada ao dock. */
+
+    .mobile-preview-trigger:hover,
+    .mobile-preview-trigger:focus-visible,
+    .mobile-preview-trigger:active {
+        border-color: #596579;
+        background: #222a38;
+        color: #ffffff;
+    }
+
+        /* Evita que a última ação da etapa fique visualmente colada ao dock. */
     body:not(.model-selection-active):not(.welcome-active) .button-group {
         margin-bottom: 8px;
     }

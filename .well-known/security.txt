@@ -1,4 +1,4 @@
-Contact: mailto:%%CONTACT_EMAIL%%
+Contact: mailto:contato@seudominio.com.br
 Preferred-Languages: pt-BR, en
-Canonical: %%SITE_URL%%/.well-known/security.txt
+Canonical: https://seu-usuario.github.io/seu-repositorio/.well-known/security.txt
 Expires: 2027-08-01T00:00:00.000Z
