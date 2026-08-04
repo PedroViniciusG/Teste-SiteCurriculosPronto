@@ -1,15 +1,34 @@
-# Currículos 1R$ — versão de teste para GitHub Pages
+# Currículos 1R$
 
-Versão estática idêntica ao fluxo principal, com os seis modelos e pagamento simulado.
+Gerador de currículos em PDF com seis modelos, páginas públicas para SEO e pagamento PIX pelo Mercado Pago.
 
-## Recursos
-- seis modelos de currículo;
-- página visual de modelos;
-- escolha pela vitrine com `?modelo=`;
-- troca de modelo antes e depois da simulação;
-- pagamento fictício;
-- PDF liberado após aprovação simulada;
-- nenhum dado financeiro real.
+## Executar localmente
 
-## Publicação
-Envie o conteúdo desta pasta para a raiz do repositório e ative o GitHub Pages em Settings > Pages > Deploy from a branch > main > /(root).
+```bash
+cp .env.example .env
+npm install
+npm start
+```
+
+Acesse `http://localhost:3000`.
+
+## Verificar antes de publicar
+
+```bash
+npm run check
+```
+
+## Documentação
+
+- `docs/ESTRUTURA.md`: função de cada pasta e arquivo.
+- `docs/DEPLOY.md`: publicação no Render.
+- `docs/SEGURANCA.md`: cuidados de produção.
+
+## GitHub
+
+Pode enviar todo o projeto, exceto `.env`, `node_modules/` e arquivos privados já cobertos pelo `.gitignore`.
+
+
+## Página de ajuda
+
+A rota `/ajuda` reúne orientações sobre pagamento, PDF, edição, reembolso e contato. O e-mail exibido vem da variável `CONTACT_EMAIL`.

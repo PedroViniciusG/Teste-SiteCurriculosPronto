@@ -86,14 +86,19 @@
 .modelo-executivo .cv-columns-layout { flex-direction:column; gap:10px; }
 .modelo-executivo .cv-left-col {
     width:100%; flex:none;
-    display:flex; align-items:flex-start; justify-content:center; flex-wrap:wrap;
-    gap:18px;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:start;
+    gap:14px;
     padding:0 0 10px;
     border:0;
     text-align:center;
 }
-.modelo-executivo .cv-photo-area { width:76px; height:76px; margin:0; }
-.modelo-executivo .cv-section-aside { margin:0; min-width:130px; }
+.modelo-executivo.tem-foto .cv-left-col {
+    grid-template-columns:82px repeat(3,minmax(0,1fr));
+}
+.modelo-executivo .cv-photo-area { width:76px; height:76px; margin:0 auto; }
+.modelo-executivo .cv-section-aside { margin:0; min-width:0; width:auto; }
 .modelo-executivo .cv-section-aside h2 { border:0; margin:0 0 3px; }
 .modelo-executivo .cv-section-aside ul { line-height:1.45; }
 .modelo-executivo .cv-right-col { width:100%; }
@@ -163,16 +168,21 @@
 .modelo-elegante .cv-columns-layout { flex-direction:column; gap:12px; }
 .modelo-elegante .cv-left-col {
     width:100%; flex:none;
-    display:flex; align-items:flex-start; justify-content:center; flex-wrap:wrap;
-    gap:20px;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:start;
+    gap:14px;
     padding:9px 0;
     border:0;
     border-top:1px solid #b7d8cf;
     border-bottom:1px solid #b7d8cf;
     text-align:center;
 }
-.modelo-elegante .cv-photo-area { width:76px; height:76px; margin:0; }
-.modelo-elegante .cv-section-aside { margin:0; min-width:125px; }
+.modelo-elegante.tem-foto .cv-left-col {
+    grid-template-columns:82px repeat(3,minmax(0,1fr));
+}
+.modelo-elegante .cv-photo-area { width:76px; height:76px; margin:0 auto; }
+.modelo-elegante .cv-section-aside { margin:0; min-width:0; width:auto; }
 .modelo-elegante .cv-section-aside h2 { margin:0 0 3px; border:0; color:#08745a; }
 .modelo-elegante .cv-right-col { width:100%; }
 .modelo-elegante .cv-section-main h2 { color:#08745a; border-color:#aad1c7; }
@@ -181,4 +191,30 @@
 @media print {
     .modelo-criativo { display:grid !important; }
     .modelo-criativo .cv-columns-layout { display:contents !important; }
+}
+
+
+/* Proteções contra estouro de conteúdo em todos os modelos. */
+.a4-sheet .cv-section-aside,
+.a4-sheet .cv-section-main,
+.a4-sheet .cv-section-aside ul,
+.a4-sheet .cv-section-aside li,
+.a4-sheet .cv-item-meta strong,
+.a4-sheet .cv-item-institution {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.modelo-executivo .cv-section-aside ul,
+.modelo-elegante .cv-section-aside ul {
+    padding: 0 3px;
+    line-height: 1.35;
+}
+
+.modelo-executivo .cv-skills-block .bullet-list,
+.modelo-elegante .cv-skills-block .bullet-list {
+    list-style-position: inside;
+    padding-left: 0;
 }

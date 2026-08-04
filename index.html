@@ -3,51 +3,53 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Versão de teste do gerador de currículo profissional com pagamento simulado e download em PDF." />
+        <meta name="description" content="Crie um currículo profissional online, escolha entre seis modelos e baixe em PDF por apenas R$ 1." />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <meta name="author" content="Currículos 1R$" />
         <meta name="theme-color" content="#121215" />
         <meta name="application-name" content="Currículos 1R$" />
+        <meta name="google-site-verification" content="" />
+        <meta name="msvalidate.01" content="" />
 
-        <title>Teste do Gerador de Currículo | Currículos 1R$</title>
-        
-        <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-        <link rel="manifest" href="manifest.webmanifest" />
+        <title>Criar Currículo Profissional em PDF por R$ 1 | Currículos 1R$</title>
+        <link rel="canonical" href="https://seu-usuario.github.io/seu-repositorio/" />
+        <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.webmanifest" />
 
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="pt_BR" />
         <meta property="og:site_name" content="Currículos 1R$" />
         <meta property="og:title" content="Crie seu currículo profissional em PDF por R$ 1" />
         <meta property="og:description" content="Preencha seus dados, escolha um modelo e baixe seu currículo profissional em PDF." />
-        <meta property="og:url" content="" />
-        <meta property="og:image" content="assets/og-image.png" />
+        <meta property="og:url" content="https://seu-usuario.github.io/seu-repositorio/" />
+        <meta property="og:image" content="https://seu-usuario.github.io/seu-repositorio/assets/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Crie seu currículo profissional em PDF por R$ 1" />
-        <meta name="twitter:description" content="Modelo clássico, preenchimento simples e pagamento simulado para testes." />
-        <meta name="twitter:image" content="assets/og-image.png" />
+        <meta name="twitter:description" content="Seis modelos de currículo, preenchimento simples e download em PDF." />
+        <meta name="twitter:image" content="https://seu-usuario.github.io/seu-repositorio/assets/og-image.png" />
 
         <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "name": "Currículos 1R$",
-          "url": "",
+          "url": "https://seu-usuario.github.io/seu-repositorio/",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Qualquer navegador moderno",
-          "description": "Gerador de currículo profissional em versão de teste com exportação em PDF.",
+          "description": "Gerador de currículo profissional com seis modelos e exportação em PDF.",
           "offers": {
             "@type": "Offer",
-            "price": "0.00",
+            "price": "1.00",
             "priceCurrency": "BRL"
           },
           "publisher": {
             "@type": "Organization",
             "name": "Currículos 1R$",
-            "url": ""
+            "url": "https://seu-usuario.github.io/seu-repositorio/"
           }
         }
         </script>
@@ -114,17 +116,17 @@
                             <!-- Conteúdo inicial estático: ajuda buscadores e usuários sem JavaScript. -->
                             <div class="welcome-screen">
                                 <span class="brand-logo welcome-brand">Currículos <span>1R$</span></span>
+                                <div class="test-version-notice"><strong>Versão de demonstração:</strong> nenhum pagamento real será processado.</div>
                                 <h1>Crie seu currículo profissional em PDF</h1>
                                 <h2>Versão de teste para amigos</h2>
-                                <p>Escolha entre seis modelos, preencha seus dados e teste todo o fluxo sem cobrança real.</p>
-                                <div class="test-mode-badge">Teste público • nenhum valor será cobrado</div>
+                                <p>Escolha entre seis modelos, preencha seus dados e teste todo o fluxo sem nenhuma cobrança real.</p>
                                 <div class="welcome-action-box">
                                     <button class="btn-primary-lg" id="btn-start-new-static" type="button">Criar novo currículo</button>
                                 </div>
                                 <nav class="welcome-links" aria-label="Conteúdo útil">
                                     <a href="pages/modelos-de-curriculo.html">Ver modelos</a>
                                     <a href="pages/como-fazer-um-curriculo.html">Como fazer um currículo</a>
-                                    <a href="pages/curriculo-primeiro-emprego.html">Primeiro emprego</a>
+                                    <a href="pages/ajuda.html">Ajuda</a>
                                 </nav>
                             </div>
                         </div>
@@ -139,38 +141,44 @@
                         <p>Selecione o design que mais combina com você antes de avançar:</p>
 
                         <div class="model-buttons" id="model-buttons">
-                            <button class="btn-secondary-lg btn-modelo-classico" data-model="padrao" type="button">
-                                Clássico (Padrão)
+                            <button class="btn-secondary-lg btn-modelo-classico" data-model="padrao" type="button" aria-pressed="false">
+                                <span class="model-button-title">Clássico (Padrão)</span>
+                                <span class="model-mobile-preview-hint">Clique para visualizar a prévia</span>
                             </button>
-                            <button class="btn-secondary-lg btn-modelo-moderno" data-model="modelo-moderno" type="button">
-                                Moderno
+                            <button class="btn-secondary-lg btn-modelo-moderno" data-model="modelo-moderno" type="button" aria-pressed="false">
+                                <span class="model-button-title">Moderno</span>
+                                <span class="model-mobile-preview-hint">Clique para visualizar a prévia</span>
                             </button>
-                            <button class="btn-secondary-lg btn-modelo-minimalista" data-model="modelo-minimalista" type="button">
-                                Minimalista
+                            <button class="btn-secondary-lg btn-modelo-minimalista" data-model="modelo-minimalista" type="button" aria-pressed="false">
+                                <span class="model-button-title">Minimalista</span>
+                                <span class="model-mobile-preview-hint">Clique para visualizar a prévia</span>
                             </button>
-                            <button class="btn-secondary-lg btn-modelo-executivo" data-model="modelo-executivo" type="button">
-                                Executivo
+                            <button class="btn-secondary-lg btn-modelo-executivo" data-model="modelo-executivo" type="button" aria-pressed="false">
+                                <span class="model-button-title">Executivo</span>
+                                <span class="model-mobile-preview-hint">Clique para visualizar a prévia</span>
                             </button>
-                            <button class="btn-secondary-lg btn-modelo-criativo" data-model="modelo-criativo" type="button">
-                                Criativo
+                            <button class="btn-secondary-lg btn-modelo-criativo" data-model="modelo-criativo" type="button" aria-pressed="false">
+                                <span class="model-button-title">Criativo</span>
+                                <span class="model-mobile-preview-hint">Clique para visualizar a prévia</span>
                             </button>
-                            <button class="btn-secondary-lg btn-modelo-elegante" data-model="modelo-elegante" type="button">
-                                Elegante
+                            <button class="btn-secondary-lg btn-modelo-elegante" data-model="modelo-elegante" type="button" aria-pressed="false">
+                                <span class="model-button-title">Elegante</span>
+                                <span class="model-mobile-preview-hint">Clique para visualizar a prévia</span>
                             </button>
                         </div>
 
                         <button class="btn-primary-lg full-width" id="btn-go-payment" type="button">
-                            Avançar para pagamento
+                            Avançar para pagamento de teste
                         </button>
                     </section>
 
                     <!-- Etapa de pagamento e liberação do PDF. -->
                     <section class="payment-container step-box is-hidden" id="box-pagamento">
                         <div class="payment-panel" id="pay-intro">
-                            <span class="payment-eyebrow">Modo de demonstração</span>
+                            <span class="payment-eyebrow">Demonstração sem cobrança</span>
                             <h2>Seu currículo está pronto!</h2>
                             <p>
-                                Teste o fluxo de pagamento e libere o PDF sem cobrança real.
+                                Teste a liberação do currículo em PDF com um pagamento totalmente simulado.
                             </p>
                             <button class="btn-primary-lg full-width" id="btn-show-pix" type="button">
                                 Gerar pagamento de teste
@@ -182,12 +190,12 @@
 
                         <div class="payment-panel is-hidden" id="pay-pix">
                             <span class="payment-eyebrow">Pagamento simulado</span>
-                            <h2>Simule a aprovação</h2>
+                            <h2>Teste a liberação do PDF</h2>
                             <p>Nenhum valor será cobrado. Use o botão abaixo para simular a aprovação.</p>
 
-                            <div class="pix-qr-placeholder" aria-label="QR Code fictício para demonstração">
+                            <div class="pix-qr-placeholder" aria-label="QR Code ilustrativo de pagamento de teste">
                                 <img class="pix-qr-image is-hidden" id="pix-qr-image" alt="QR Code PIX" />
-                                <span id="pix-qr-loading">Gerando QR Code...</span>
+                                <span id="pix-qr-loading">Preparando pagamento simulado...</span>
                             </div>
 
                             <div class="pix-copy-row">
@@ -207,7 +215,7 @@
                             </p>
 
                             <p class="payment-helper">
-                                Esta versão não processa dinheiro. O botão de simulação libera o PDF somente para testes.
+                                Esta versão não processa dinheiro. A simulação libera o PDF apenas para testes.
                             </p>
 
                             <button class="btn-secondary-lg full-width btn-simulate-payment" id="btn-simulate-payment" type="button">
@@ -238,13 +246,24 @@
             </main>
 
             <!-- Botão exibido somente em celulares para abrir a prévia em uma camada separada. -->
-            <button class="mobile-preview-trigger" id="btn-open-mobile-preview" type="button" aria-controls="mobile-preview-overlay" aria-expanded="false">
+            <button
+                class="mobile-preview-trigger"
+                id="btn-open-mobile-preview"
+                type="button"
+                aria-controls="preview-container"
+                aria-expanded="false"
+            >
                 Visualizar prévia
             </button>
 
             <!-- Painel direito: prévia A4 atualizada em tempo real. -->
             <aside class="preview-container" id="preview-container" aria-label="Prévia do currículo">
-                <button class="mobile-preview-close" id="btn-close-mobile-preview" type="button" aria-label="Fechar prévia">
+                <button
+                    class="mobile-preview-close"
+                    id="btn-close-mobile-preview"
+                    type="button"
+                    aria-label="Fechar prévia"
+                >
                     Fechar prévia
                 </button>
                 <article class="a4-sheet" id="cv-preview">
@@ -314,8 +333,9 @@
 
         <footer class="site-footer no-print">
             <nav aria-label="Links institucionais">
-                <a href="pages/como-fazer-um-curriculo.html">Dicas</a>
+                <a href="pages/modelos-de-curriculo.html">Modelos</a>
                 <a href="pages/como-fazer-um-curriculo.html">Guia de currículo</a>
+                <a href="pages/ajuda.html">Ajuda</a>
                 <a href="pages/politica-de-privacidade.html">Privacidade</a>
                 <a href="pages/termos-de-uso.html">Termos</a>
                 <a href="pages/politica-de-cookies.html">Cookies</a>

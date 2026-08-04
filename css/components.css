@@ -210,6 +210,54 @@
     gap: 12px;
 }
 
+
+/* Destaque do rascunho salvo sem competir com a ação principal. */
+.btn-continue-draft {
+    border-color: #4b5563;
+    background: #181a1f;
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.btn-continue-draft:hover,
+.btn-continue-draft:focus-visible {
+    border-color: #717b8c;
+    background: #22252c;
+}
+
+.btn-draft-preview {
+    display: none;
+}
+
+@media screen and (max-width: 860px) {
+    .btn-continue-draft {
+        border-color: #7b8494;
+        background: #2b3039;
+        color: #ffffff;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-continue-draft:hover,
+    .btn-continue-draft:focus-visible,
+    .btn-continue-draft:active {
+        border-color: #a6adba;
+        background: #353b46;
+    }
+
+    .btn-draft-preview {
+        display: block;
+        border: 1px solid #3a4352;
+        background: #1a202b;
+        color: #f4f7fb;
+    }
+
+    .btn-draft-preview:hover,
+    .btn-draft-preview:focus-visible {
+        border-color: #596579;
+        background: #222a38;
+    }
+}
+
 .model-selection h2 {
     margin-bottom: 15px;
     color: #fff;
@@ -259,4 +307,55 @@
 
 .site-footer {
     display: none;
+}
+
+
+/* Texto auxiliar exibido dentro dos modelos somente no celular. */
+.model-button-title {
+    display: block;
+}
+
+.model-mobile-preview-hint {
+    display: none;
+}
+
+.model-buttons [data-model].is-selected {
+    outline: 2px solid rgba(255, 255, 255, 0.85);
+    outline-offset: 2px;
+}
+
+@media screen and (max-width: 860px) {
+    .model-buttons [data-model] {
+        min-height: 62px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .model-mobile-preview-hint {
+        display: block;
+        font-size: 9px;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: 0.04em;
+        opacity: 0.72;
+        text-transform: none;
+    }
+
+    .model-buttons [data-model].is-selected .model-mobile-preview-hint {
+        opacity: 1;
+    }
+}
+
+.test-version-notice {
+    margin: 0 0 1rem;
+    padding: .8rem 1rem;
+    border: 1px solid rgba(96,165,250,.55);
+    border-radius: 10px;
+    background: rgba(37,99,235,.12);
+    color: #dbeafe;
+    font-size: .92rem;
+    line-height: 1.45;
 }

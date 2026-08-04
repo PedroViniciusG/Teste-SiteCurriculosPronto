@@ -74,8 +74,7 @@
 
 /* =========================================================
    PRÉVIA MOBILE EM CAMADA
-   No celular, a folha não fica mais empilhada abaixo do formulário.
-   O usuário abre a prévia somente quando desejar.
+   No celular, a folha não fica empilhada abaixo do formulário.
    ========================================================= */
 .mobile-preview-trigger,
 .mobile-preview-close {
@@ -83,9 +82,7 @@
 }
 
 @media screen and (max-width: 860px) {
-    body.mobile-preview-open {
-        overflow: hidden;
-    }
+    body.mobile-preview-open { overflow: hidden; }
 
     .mobile-preview-trigger {
         display: block;
@@ -122,7 +119,7 @@
     .preview-container.mobile-preview-visible {
         display: flex;
         align-items: flex-start;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .mobile-preview-close {
@@ -143,21 +140,64 @@
     }
 
     .preview-container .a4-sheet {
-        transform: scale(var(--mobile-preview-scale, .58));
-        transform-origin: top left;
-        margin: 0;
+        margin: 0 auto 28px;
+        transform: none;
+        transform-origin: top center;
         flex-shrink: 0;
     }
-}
 
-@media screen and (max-width: 430px) {
-    .preview-container .a4-sheet {
-        --mobile-preview-scale: .56;
+    /* Na escolha de modelos, o próprio botão do modelo abre a prévia. */
+    body.model-selection-active .mobile-preview-trigger,
+    body.welcome-active .mobile-preview-trigger {
+        display: none;
+    }
+
+    .preview-container.mobile-preview-visible {
+        cursor: pointer;
+    }
+
+    .preview-container.mobile-preview-visible .a4-sheet,
+    .preview-container.mobile-preview-visible .mobile-preview-close {
+        cursor: default;
     }
 }
 
-@media screen and (max-width: 380px) {
-    .preview-container .a4-sheet {
-        --mobile-preview-scale: .49;
+/* =========================================================
+   ESPAÇAMENTO DO BOTÃO DE PRÉVIA NO CELULAR
+   Reserva uma área exclusiva abaixo da navegação para que o
+   botão flutuante não encoste em Voltar/Avançar.
+   ========================================================= */
+@media screen and (max-width: 860px) {
+    body:not(.model-selection-active):not(.welcome-active) .form-footer {
+        padding-bottom: 112px;
+    }
+
+    .mobile-preview-trigger {
+        left: 16px;
+        right: 16px;
+        bottom: max(16px, env(safe-area-inset-bottom));
+        width: auto;
+        min-height: 48px;
+        padding: 13px 18px;
+        border-color: rgba(255,255,255,.28);
+        background: #f4f4f5;
+        box-shadow: 0 -12px 28px rgba(12,12,15,.72), 0 10px 24px rgba(0,0,0,.35);
+    }
+
+    /* Evita que a última ação da etapa fique visualmente colada ao dock. */
+    body:not(.model-selection-active):not(.welcome-active) .button-group {
+        margin-bottom: 8px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    body:not(.model-selection-active):not(.welcome-active) .form-footer {
+        padding-bottom: 106px;
+    }
+
+    .mobile-preview-trigger {
+        left: 14px;
+        right: 14px;
+        min-height: 46px;
     }
 }

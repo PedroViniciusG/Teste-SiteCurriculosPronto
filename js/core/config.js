@@ -35,6 +35,7 @@
         ],
 
         payment: {
+            simulationDelayMs: 900,
             amount: 1,
             currency: "BRL",
             description: "Currículo profissional em PDF",

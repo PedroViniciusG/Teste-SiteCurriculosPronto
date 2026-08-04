@@ -23,7 +23,15 @@
         byId("model-buttons")?.addEventListener("click", (event) => {
             const button = event.target.closest("[data-model]");
             if (!button) return;
+
             App.preview.applyModel(button.dataset.model);
+            App.mobilePreview.updateSelectedModel();
+
+            // Na etapa de modelos, tocar em um estilo também abre sua prévia
+            // em celulares. No desktop, a prévia lateral continua normal.
+            if (window.matchMedia("(max-width: 860px)").matches) {
+                App.mobilePreview.open();
+            }
         });
 
         byId("btn-go-payment")?.addEventListener("click", App.payment.open);
@@ -34,28 +42,96 @@
         byId("btn-simulate-payment")?.addEventListener("click", App.payment.simulateApproval);
         byId("btn-print")?.addEventListener("click", App.print.open);
 
-        // No celular, a prévia é aberta em uma camada para não ficar
-        // empilhada abaixo do formulário.
+        // Em telas pequenas, a prévia abre em uma camada separada.
+        // O módulo abaixo calcula a escala pela largura real do aparelho,
+        // centraliza a folha e também controla o estado selecionado dos modelos.
         const previewContainer = byId("preview-container");
+        const previewSheet = byId("cv-preview");
         const openPreviewButton = byId("btn-open-mobile-preview");
         const closePreviewButton = byId("btn-close-mobile-preview");
 
-        function setMobilePreview(open) {
-            previewContainer?.classList.toggle("mobile-preview-visible", open);
-            document.body.classList.toggle("mobile-preview-open", open);
-            openPreviewButton?.setAttribute("aria-expanded", String(open));
+        function updateMobilePreviewScale() {
+            if (!previewSheet || window.innerWidth > 860) {
+                previewSheet?.style.removeProperty("zoom");
+                return;
+            }
+
+            const horizontalSpace = 28;
+            const sheetWidth = 595;
+            const scale = Math.min(0.92, (window.innerWidth - horizontalSpace) / sheetWidth);
+            previewSheet.style.zoom = String(Math.max(0.48, scale));
         }
 
-        openPreviewButton?.addEventListener("click", () => setMobilePreview(true));
-        closePreviewButton?.addEventListener("click", () => setMobilePreview(false));
+        function updateSelectedModel() {
+            const selected = App.state.value.data.modelo;
+            document.querySelectorAll("#model-buttons [data-model]").forEach((button) => {
+                const isSelected = button.dataset.model === selected;
+                button.classList.toggle("is-selected", isSelected);
+                button.setAttribute("aria-pressed", String(isSelected));
+            });
+        }
+
+        let previewRestoreTarget = null;
+
+        function openMobilePreview({ restoreTarget = null } = {}) {
+            if (!previewContainer) return;
+            previewRestoreTarget = restoreTarget || document.activeElement;
+            updateMobilePreviewScale();
+            previewContainer.classList.add("mobile-preview-visible");
+            document.body.classList.add("mobile-preview-open");
+            openPreviewButton?.setAttribute("aria-expanded", "true");
+            closePreviewButton?.focus();
+        }
+
+        function closeMobilePreview({ restoreFocus = true } = {}) {
+            if (!previewContainer) return;
+            previewContainer.classList.remove("mobile-preview-visible");
+            document.body.classList.remove("mobile-preview-open");
+            previewSheet?.style.removeProperty("zoom");
+            openPreviewButton?.setAttribute("aria-expanded", "false");
+
+            if (restoreFocus) {
+                const target = previewRestoreTarget instanceof HTMLElement
+                    ? previewRestoreTarget
+                    : openPreviewButton;
+                target?.focus();
+            }
+            previewRestoreTarget = null;
+        }
+
+        App.mobilePreview = {
+            open: openMobilePreview,
+            close: closeMobilePreview,
+            resize: updateMobilePreviewScale,
+            updateSelectedModel,
+        };
+
+        openPreviewButton?.addEventListener("click", openMobilePreview);
+        closePreviewButton?.addEventListener("click", () => closeMobilePreview());
+        previewContainer?.addEventListener("click", (event) => {
+            // Fecha ao tocar na área escura vazia, mas não ao tocar na folha ou no botão.
+            if (event.target === previewContainer) closeMobilePreview();
+        });
 
         document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") setMobilePreview(false);
+            if (event.key === "Escape" && previewContainer?.classList.contains("mobile-preview-visible")) {
+                closeMobilePreview();
+            }
         });
 
         window.addEventListener("resize", () => {
-            if (window.innerWidth > 860) setMobilePreview(false);
+            if (window.innerWidth > 860) {
+                closeMobilePreview({ restoreFocus: false });
+                previewSheet?.style.removeProperty("zoom");
+                return;
+            }
+
+            if (previewContainer?.classList.contains("mobile-preview-visible")) {
+                updateMobilePreviewScale();
+            }
         });
+
+        updateSelectedModel();
     }
 
     function init() {

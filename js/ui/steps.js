@@ -9,31 +9,38 @@
     const { steps } = App.config;
 
     function showWelcome() {
+        document.body.classList.remove("model-selection-active");
+        document.body.classList.add("welcome-active");
         setVisible(byId("app-header"), false);
         setVisible(byId("app-footer"), false);
         setVisible(byId("field-label"), false);
         setVisible(byId("box-escolha-modelo"), false);
         setVisible(byId("box-pagamento"), false);
 
-        const continueButton = App.state.hasDraft()
-            ? '<button class="btn-secondary-lg" id="btn-continue-draft" type="button">Continuar rascunho</button>'
+        const hasDraft = App.state.hasDraft();
+        const continueButton = hasDraft
+            ? '<button class="btn-secondary-lg btn-continue-draft" id="btn-continue-draft" type="button">Continuar rascunho</button>'
+            : "";
+        const draftPreviewButton = hasDraft
+            ? '<button class="btn-secondary-lg btn-draft-preview" id="btn-preview-draft" type="button">Mostrar prévia do rascunho</button>'
             : "";
 
         byId("interactive-content").innerHTML = `
             <div class="welcome-screen">
                 <span class="brand-logo welcome-brand">Currículos <span>1R$</span></span>
+                <div class="test-version-notice"><strong>Versão de demonstração:</strong> nenhum pagamento real será processado.</div>
                 <h1>Crie seu currículo profissional em PDF</h1>
                 <h2>Versão de teste para amigos</h2>
-                <p>Escolha entre seis modelos, preencha seus dados e teste todo o fluxo sem cobrança real.</p>
-                <div class="test-mode-badge">Teste público • nenhum valor será cobrado</div>
+                <p>Escolha entre seis modelos, preencha seus dados e teste todo o fluxo sem nenhuma cobrança real.</p>
                 <div class="welcome-action-box">
                     <button class="btn-primary-lg" id="btn-start-new" type="button">Criar novo currículo</button>
                     ${continueButton}
+                    ${draftPreviewButton}
                 </div>
                 <nav class="welcome-links" aria-label="Conteúdo útil">
                     <a href="pages/modelos-de-curriculo.html">Ver modelos</a>
                     <a href="pages/como-fazer-um-curriculo.html">Como fazer um currículo</a>
-                    <a href="pages/curriculo-primeiro-emprego.html">Primeiro emprego</a>
+                    <a href="pages/ajuda.html">Ajuda</a>
                 </nav>
             </div>
         `;
@@ -50,6 +57,11 @@
             render();
             App.preview.render();
         });
+        byId("btn-preview-draft")?.addEventListener("click", () => {
+            App.state.loadDraft();
+            App.preview.render();
+            App.mobilePreview?.open({ restoreTarget: byId("btn-preview-draft") });
+        });
     }
 
     function updateProgress() {
@@ -59,6 +71,8 @@
     }
 
     function showModelSelection() {
+        document.body.classList.remove("welcome-active");
+        document.body.classList.add("model-selection-active");
         byId("interactive-content").replaceChildren();
         setVisible(byId("field-label"), false);
         setVisible(byId("box-escolha-modelo"), true);
@@ -74,6 +88,7 @@
         const currentStep = App.state.value.currentStep;
         if (currentStep < 0) return showWelcome();
 
+        document.body.classList.remove("model-selection-active", "welcome-active");
         setVisible(byId("app-header"), true);
         setVisible(byId("app-footer"), true);
         setVisible(byId("box-pagamento"), false);

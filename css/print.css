@@ -114,15 +114,24 @@ body {
 }
 
 
-/*
- * O modelo criativo utiliza uma faixa colorida que deve encostar nas bordas
- * da folha. A regra geral de 45px de padding criava uma moldura branca.
- */
-.a4-sheet.modelo-criativo {
-    padding: 0 !important;
-}
-
+/* O Criativo usa uma faixa colorida até as bordas da folha. */
+.a4-sheet.modelo-criativo { padding: 0 !important; }
 .a4-sheet.modelo-criativo .cv-header-block,
-.a4-sheet.modelo-criativo .cv-left-col {
-    margin-left: 0 !important;
+.a4-sheet.modelo-criativo .cv-left-col { margin-left: 0 !important; }
+
+/* Mantém Executivo e Elegante dentro da largura útil também no PDF. */
+.modelo-executivo .cv-left-col,
+.modelo-elegante .cv-left-col {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+}
+.modelo-executivo.tem-foto .cv-left-col,
+.modelo-elegante.tem-foto .cv-left-col {
+    grid-template-columns: 82px repeat(3, minmax(0, 1fr)) !important;
+}
+.modelo-executivo .cv-section-aside,
+.modelo-elegante .cv-section-aside {
+    min-width: 0 !important;
+    width: auto !important;
 }
