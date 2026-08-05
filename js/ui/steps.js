@@ -70,11 +70,12 @@
         byId("progress").style.width = `${((currentStep + 1) / steps.length) * 100}%`;
     }
 
-    function showModelSelection() {
+    function showModelStep() {
         document.body.classList.remove("welcome-active");
         document.body.classList.add("model-selection-active");
-        byId("interactive-content").replaceChildren();
-        setVisible(byId("field-label"), false);
+        setVisible(byId("field-label"), true);
+        byId("field-label").textContent = steps[steps.length - 1].label;
+        byId("interactive-content").innerHTML = "";
         setVisible(byId("box-escolha-modelo"), true);
         setVisible(byId("box-pagamento"), false);
         setVisible(byId("app-footer"), true);
@@ -94,14 +95,20 @@
         setVisible(byId("box-pagamento"), false);
         updateProgress();
 
-        if (currentStep === steps.length - 1) return showModelSelection();
+        if (currentStep === steps.length - 1) return showModelStep();
 
         setVisible(byId("box-escolha-modelo"), false);
         setVisible(byId("btn-advance"), true);
         setVisible(byId("field-label"), true);
 
         const step = steps[currentStep];
-        byId("field-label").textContent = step.label;
+        const fieldLabel = byId("field-label");
+        if (step.key === "competencias_adicionais") {
+            setVisible(fieldLabel, false);
+        } else {
+            setVisible(fieldLabel, true);
+            fieldLabel.textContent = step.label;
+        }
         App.forms.renderStepForm(step.key, byId("interactive-content"));
     }
 

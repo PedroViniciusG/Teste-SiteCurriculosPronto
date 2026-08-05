@@ -9,10 +9,10 @@
     const { byId, escapeHtml, formatPhone, formatCpf, formatShortDate } = App.utils;
 
     function field(label, key, value, options = {}) {
-        const { type = "text", placeholder = "", inputMode = "text" } = options;
+        const { type = "text", placeholder = "", inputMode = "text", labelClass = "" } = options;
         return `
             <div class="input-sub-group">
-                <label for="field-${key}">${label}</label>
+                <label class="${labelClass}" for="field-${key}">${label}</label>
                 <input
                     id="field-${key}"
                     type="${type}"
@@ -47,10 +47,17 @@
     }
 
     function renderPhoto(container) {
-        const hasPhoto = Boolean(App.state.value.data.foto);
+        const photo = App.state.value.data.foto;
+        const hasPhoto = Boolean(photo);
         container.innerHTML = `
-            <label class="file-input-wrapper">
-                <span>Clique para carregar uma imagem</span>
+            <label class="file-input-wrapper ${hasPhoto ? "has-photo" : ""}">
+                ${hasPhoto ? `
+                    <img class="uploaded-photo-thumbnail" src="${photo}" alt="Miniatura da foto enviada" />
+                    <span class="photo-upload-status">Foto adicionada. Toque para trocar.</span>
+                ` : `
+                    <span class="photo-upload-placeholder" aria-hidden="true">+</span>
+                    <span>Clique para carregar uma imagem</span>
+                `}
                 <input id="photo-input" type="file" accept="image/*" />
             </label>
             ${hasPhoto ? '<button class="btn-secondary-action" data-action="remove-photo" type="button">Remover foto atual</button>' : ""}
@@ -201,6 +208,41 @@
         `;
     }
 
+    function renderSkillsAndAdditional(container) {
+        const data = App.state.value.data;
+        container.innerHTML = `
+            <section class="additional-group">
+                <p class="section-input-title">COMPETÊNCIAS E HABILIDADES</p>
+                <p class="section-input-helper">Adicione competências como liderança, Excel ou atendimento.</p>
+                ${field("", "new-skill", "", {
+                    placeholder: "Ex.: Liderança, Excel",
+                })}
+                <button class="btn-add-item" data-action="add-skill" type="button">Inserir habilidade</button>
+                <div class="added-items-list">${renderTagRows(data.competencias, "skill")}</div>
+            </section>
+
+            <section class="additional-group">
+                <p class="section-input-title">IDIOMAS</p>
+                <p class="section-input-helper">Informe o idioma e o nível. Ex.: Inglês — Fluente.</p>
+                ${field("", "new-language", "", {
+                    placeholder: "Ex.: Inglês - Fluente",
+                })}
+                <button class="btn-add-item" data-action="add-language" type="button">Inserir idioma</button>
+                <div class="added-items-list">${renderTagRows(data.idiomas, "language")}</div>
+            </section>
+
+            <section class="additional-group">
+                <p class="section-input-title">INFORMAÇÕES ADICIONAIS</p>
+                <p class="section-input-helper">Inclua disponibilidade, CNH, viagens ou outras informações relevantes.</p>
+                ${field("", "new-interest", "", {
+                    placeholder: "Outras informações de interesse",
+                })}
+                <button class="btn-add-item" data-action="add-interest" type="button">Inserir informação</button>
+                <div class="added-items-list">${renderTagRows(data.interesses, "interest")}</div>
+            </section>
+        `;
+    }
+
     function renderStepForm(stepKey, container) {
         const renderers = {
             dados_pessoais: renderPersonalData,
@@ -211,6 +253,7 @@
             certificacoes: renderCertificates,
             competencias: renderSkills,
             adicionais: renderAdditional,
+            competencias_adicionais: renderSkillsAndAdditional,
         };
         renderers[stepKey]?.(container);
     }
@@ -303,9 +346,9 @@
             experience: ["experiencias", renderExperiences],
             education: ["formacoes", renderEducation],
             certificate: ["certificacoes", renderCertificates],
-            skill: ["competencias", renderSkills],
-            language: ["idiomas", renderAdditional],
-            interest: ["interesses", renderAdditional],
+            skill: ["competencias", renderSkillsAndAdditional],
+            language: ["idiomas", renderSkillsAndAdditional],
+            interest: ["interesses", renderSkillsAndAdditional],
         };
         const [stateKey, renderFunction] = map[type] || [];
         if (!stateKey) return;
@@ -376,9 +419,9 @@
             "save-experience": saveExperience,
             "save-education": saveEducation,
             "save-certificate": saveCertificate,
-            "add-skill": () => addTag("new-skill", "competencias", renderSkills),
-            "add-language": () => addTag("new-language", "idiomas", renderAdditional),
-            "add-interest": () => addTag("new-interest", "interesses", renderAdditional),
+            "add-skill": () => addTag("new-skill", "competencias", renderSkillsAndAdditional),
+            "add-language": () => addTag("new-language", "idiomas", renderSkillsAndAdditional),
+            "add-interest": () => addTag("new-interest", "interesses", renderSkillsAndAdditional),
         };
 
         if (actions[action]) return actions[action]();

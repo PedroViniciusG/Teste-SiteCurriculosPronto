@@ -27,6 +27,36 @@
     text-transform: uppercase;
 }
 
+
+.input-sub-group label.section-input-title {
+    margin-bottom: 10px;
+    color: var(--text-main);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+
+.section-input-title {
+    margin: 0 0 4px;
+    color: var(--text-main);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+.section-input-helper {
+    margin: 0 0 10px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
 .input-sub-group input,
 .input-sub-group textarea,
 .pix-copy-row input {
@@ -214,4 +244,50 @@
     margin-top: 28px;
     padding-top: 28px;
     border-top: 1px dashed var(--border-premium);
+}
+
+
+/* Confirmação visual do envio da foto. */
+.file-input-wrapper.has-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+.uploaded-photo-thumbnail {
+    width: 96px;
+    height: 96px;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.photo-upload-status {
+    color: #fff;
+    font-size: 12px;
+    text-transform: none;
+}
+
+.photo-upload-placeholder {
+    display: grid;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 10px;
+    place-items: center;
+    border: 1px solid var(--border-premium);
+    border-radius: 50%;
+    font-size: 28px;
+    line-height: 1;
+}
+
+/* Etapa final de escolha do modelo. */
+.model-selection-active #box-escolha-modelo {
+    margin-top: 4px;
+    padding-top: 0;
+    border-top: 0;
 }

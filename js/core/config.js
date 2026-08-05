@@ -20,9 +20,8 @@
             { key: "experiencias", label: "Experiência Profissional" },
             { key: "formacoes", label: "Formação Acadêmica" },
             { key: "certificacoes", label: "Certificações e Cursos" },
-            { key: "competencias", label: "Competências e Habilidades" },
-            { key: "adicionais", label: "Informações Adicionais" },
-            { key: "modelo", label: "Escolha o Design do seu Currículo" },
+            { key: "competencias_adicionais", label: "Competências, Habilidades e Informações Adicionais" },
+            { key: "modelo", label: "Escolha do Modelo" },
         ],
 
         models: [

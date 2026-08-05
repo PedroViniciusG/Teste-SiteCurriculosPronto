@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="progress-container">
-                            <p id="step-indicator">Etapa 1 de 9</p>
+                            <p id="step-indicator">Etapa 1 de 8</p>
                             <div class="progress-bar" aria-hidden="true">
                                 <div class="progress-fill" id="progress"></div>
                             </div>
@@ -137,9 +137,7 @@
                         class="model-selection step-box is-hidden"
                         id="box-escolha-modelo"
                     >
-                        <h2>Tudo pronto!</h2>
-                        <p>Selecione o design que mais combina com você antes de avançar:</p>
-
+                        <p class="model-selection-helper">Escolha o modelo que mais combina com você.</p>
                         <div class="model-buttons" id="model-buttons">
                             <button class="btn-secondary-lg btn-modelo-classico" data-model="padrao" type="button" aria-pressed="false">
                                 <span class="model-button-title">Clássico (Padrão)</span>
@@ -347,6 +345,8 @@
         <noscript>
             <div class="noscript-message">Ative o JavaScript para utilizar o gerador de currículo.</div>
         </noscript>
+
+        <!-- Geração direta do PDF: melhora a compatibilidade com Edge e navegadores integrados ao Bing. -->
 
         <!-- Scripts clássicos em ordem de dependência. -->
         <script src="js/core/config.js"></script>

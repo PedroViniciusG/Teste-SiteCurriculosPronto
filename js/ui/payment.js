@@ -23,9 +23,7 @@
 
     function backToModels() {
         setVisible(byId("box-pagamento"), false);
-        setVisible(byId("box-escolha-modelo"), true);
-        setVisible(byId("app-footer"), true);
-        setVisible(byId("btn-advance"), false);
+        App.steps.render();
     }
 
     function showIntro() {
