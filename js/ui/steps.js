@@ -103,12 +103,8 @@
 
         const step = steps[currentStep];
         const fieldLabel = byId("field-label");
-        if (step.key === "competencias_adicionais") {
-            setVisible(fieldLabel, false);
-        } else {
-            setVisible(fieldLabel, true);
-            fieldLabel.textContent = step.label;
-        }
+        setVisible(fieldLabel, true);
+        fieldLabel.textContent = step.label;
         App.forms.renderStepForm(step.key, byId("interactive-content"));
     }
 

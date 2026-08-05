@@ -8,6 +8,117 @@
     const App = (global.CVApp = global.CVApp || {});
     const { byId, escapeHtml, formatPhone, formatCpf, formatShortDate } = App.utils;
 
+
+    const SKILL_SUGGESTION_CATEGORIES = Object.freeze({
+        "Comportamentais": [
+            "Comunicação", "Trabalho em equipe", "Proatividade", "Responsabilidade",
+            "Adaptabilidade", "Empatia", "Inteligência emocional", "Criatividade",
+            "Resolução de problemas", "Facilidade de aprendizado", "Paciência",
+            "Ética profissional", "Comprometimento", "Pontualidade", "Atenção aos detalhes",
+        ],
+        "Organização e gestão": [
+            "Organização", "Gestão do tempo", "Planejamento", "Liderança",
+            "Tomada de decisão", "Cumprimento de prazos", "Gestão de prioridades",
+            "Coordenação de equipes", "Delegação de tarefas", "Gestão de conflitos",
+            "Visão estratégica", "Melhoria contínua", "Gestão de projetos",
+        ],
+        "Atendimento e vendas": [
+            "Atendimento ao cliente", "Vendas", "Negociação", "Pós-venda",
+            "Prospecção de clientes", "Comunicação com o público", "Resolução de reclamações",
+            "Fidelização de clientes", "Técnicas de vendas", "Operação de caixa",
+            "Telemarketing", "Recepção", "CRM", "Atendimento presencial",
+        ],
+        "Administrativo": [
+            "Pacote Office", "Excel", "Word", "PowerPoint", "Digitação",
+            "Organização de arquivos", "Rotinas administrativas", "Emissão de documentos",
+            "Controle de agenda", "Elaboração de relatórios", "Atendimento telefônico",
+            "Gestão documental", "Sistemas ERP", "Redação empresarial",
+        ],
+        "Logística": [
+            "Controle de estoque", "Inventário", "Separação de pedidos",
+            "Conferência de mercadorias", "Recebimento de materiais", "Expedição",
+            "Armazenagem", "Operação de empilhadeira", "Picking e packing",
+            "Roteirização", "Gestão de transportes", "Controle de validade",
+            "Sistemas WMS", "Movimentação de cargas", "Logística reversa",
+        ],
+        "Tecnologia": [
+            "Informática", "Suporte técnico", "HTML e CSS", "JavaScript", "Python",
+            "Git e GitHub", "Banco de dados", "Desenvolvimento web",
+            "Manutenção de computadores", "Redes de computadores", "Segurança da informação",
+            "Análise de dados", "Excel avançado", "Power BI", "Sistemas ERP",
+        ],
+        "Saúde e cuidados": [
+            "Atendimento humanizado", "Primeiros socorros", "Administração de medicamentos",
+            "Aferição de sinais vitais", "Cuidados com idosos", "Biossegurança",
+            "Organização de prontuários", "Trabalho sob pressão", "Higiene e segurança",
+            "Rotinas hospitalares", "Discrição e confidencialidade", "Acolhimento ao paciente",
+        ],
+        "Alimentação e serviços": [
+            "Atendimento em salão", "Preparo de alimentos", "Boas práticas de manipulação",
+            "Organização de cozinha", "Controle de validade", "Limpeza e conservação",
+            "Agilidade no atendimento", "Trabalho sob pressão", "Operação de caixa",
+            "Reposição de produtos", "Controle de pedidos", "Montagem de pratos",
+        ],
+        "Construção e manutenção": [
+            "Leitura de projetos", "Manutenção preventiva", "Manutenção corretiva",
+            "Instalações elétricas", "Hidráulica", "Soldagem", "Uso de ferramentas",
+            "Segurança do trabalho", "Inspeção de equipamentos", "Diagnóstico de falhas",
+            "Pintura", "Alvenaria", "Manutenção predial",
+        ],
+        "Educação": [
+            "Didática", "Planejamento de aulas", "Gestão de sala de aula",
+            "Avaliação de aprendizagem", "Alfabetização", "Educação inclusiva",
+            "Mediação de conflitos", "Elaboração de materiais", "Comunicação com famílias",
+            "Tutoria e acompanhamento", "Desenvolvimento de atividades", "Ensino remoto",
+        ],
+        "Marketing e comunicação": [
+            "Redes sociais", "Criação de conteúdo", "Copywriting", "Edição de vídeo",
+            "Design gráfico", "Planejamento de campanhas", "Tráfego pago", "SEO",
+            "Atendimento em redes sociais", "Análise de métricas", "Canva", "CapCut",
+            "Fotografia", "E-mail marketing", "Planejamento editorial",
+        ],
+        "Finanças": [
+            "Contas a pagar e receber", "Conciliação bancária", "Fluxo de caixa",
+            "Emissão de notas fiscais", "Cobrança", "Faturamento", "Matemática financeira",
+            "Controle financeiro", "Sistemas contábeis", "Fechamento de caixa",
+            "Excel financeiro", "Análise de custos", "Prestação de contas",
+        ],
+        "Recursos Humanos": [
+            "Recrutamento e seleção", "Triagem de currículos", "Admissão e demissão",
+            "Controle de ponto", "Folha de pagamento", "Treinamento e desenvolvimento",
+            "Integração de colaboradores", "Comunicação interna", "Clima organizacional",
+            "Gestão de benefícios", "Rotinas de departamento pessoal", "Entrevistas",
+        ],
+        "Indústria e produção": [
+            "Operação de máquinas", "Linha de produção", "Controle de qualidade",
+            "Inspeção de produtos", "Boas práticas de fabricação", "Metodologia 5S",
+            "Produção enxuta", "Leitura de instrumentos de medição", "Montagem de peças",
+            "Manutenção autônoma", "Segurança industrial", "Cumprimento de metas",
+        ],
+        "Limpeza e apoio": [
+            "Limpeza profissional", "Conservação de ambientes", "Organização de materiais",
+            "Uso correto de produtos de limpeza", "Higienização", "Coleta de resíduos",
+            "Reposição de materiais", "Lavanderia", "Limpeza hospitalar",
+            "Zelo pelo patrimônio", "Agilidade", "Trabalho em equipe",
+        ],
+    });
+
+    const ROLE_CATEGORY_RULES = Object.freeze([
+        { category: "Logística", words: ["logistica", "estoque", "almoxarif", "expedicao", "conferente", "armaz", "empilhadeira", "transport"] },
+        { category: "Atendimento e vendas", words: ["atendimento", "venda", "vendedor", "recepc", "telemarketing", "comercial", "caixa", "loja"] },
+        { category: "Administrativo", words: ["administr", "secretar", "escritorio", "assistente", "auxiliar administrativo"] },
+        { category: "Tecnologia", words: ["tecnologia", "desenvolv", "programador", "suporte", "informatica", "dados", "software", "ti "] },
+        { category: "Saúde e cuidados", words: ["saude", "enferm", "cuidador", "farmac", "hospital", "clinica", "tecnico de enfermagem"] },
+        { category: "Alimentação e serviços", words: ["cozinha", "cozinheiro", "garcom", "restaurante", "aliment", "confeite", "padeiro"] },
+        { category: "Construção e manutenção", words: ["manutenc", "eletric", "mecan", "pedreiro", "construc", "soldador", "pintor", "hidraulic"] },
+        { category: "Educação", words: ["professor", "educac", "pedagog", "instrutor", "ensino", "monitor"] },
+        { category: "Marketing e comunicação", words: ["marketing", "social media", "comunicac", "conteudo", "designer", "publicidade"] },
+        { category: "Finanças", words: ["finance", "contab", "fatur", "cobranca", "tesour", "banco"] },
+        { category: "Recursos Humanos", words: ["recursos humanos", "rh ", "departamento pessoal", "recrut", "folha de pagamento"] },
+        { category: "Indústria e produção", words: ["produc", "operador de maquina", "industr", "qualidade", "fabrica", "montador"] },
+        { category: "Limpeza e apoio", words: ["limpeza", "servicos gerais", "conservacao", "auxiliar de limpeza", "copeiro"] },
+    ]);
+
     function field(label, key, value, options = {}) {
         const { type = "text", placeholder = "", inputMode = "text", labelClass = "" } = options;
         return `
@@ -183,41 +294,272 @@
         `).join("");
     }
 
+    function normalizeSuggestionText(value) {
+        return String(value || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
+    }
+
+    function isSkillAdded(skill) {
+        const normalizedSkill = normalizeSuggestionText(skill);
+        return App.state.value.data.competencias.some(
+            (item) => normalizeSuggestionText(item) === normalizedSkill,
+        );
+    }
+
+    function getProfileSkillCategory() {
+        const data = App.state.value.data;
+        const profileText = normalizeSuggestionText(`${data.cargo || ""} ${data.resumo || ""}`);
+        const matchedRule = ROLE_CATEGORY_RULES.find((rule) =>
+            rule.words.some((word) => profileText.includes(normalizeSuggestionText(word))),
+        );
+        return matchedRule?.category || "Comportamentais";
+    }
+
+    function getQuickSkillSuggestions() {
+        const category = getProfileSkillCategory();
+        const roleSuggestions = SKILL_SUGGESTION_CATEGORIES[category] || [];
+        const generalSuggestions = [
+            "Comunicação", "Organização", "Trabalho em equipe",
+            "Proatividade", "Responsabilidade", "Gestão do tempo",
+        ];
+        return [...new Set([...roleSuggestions.slice(0, 4), ...generalSuggestions])].slice(0, 6);
+    }
+
+    function skillCountText() {
+        const count = App.state.value.data.competencias.length;
+        if (count === 0) return "Nenhuma selecionada";
+        if (count <= 4) return `${count} selecionada${count === 1 ? "" : "s"}`;
+        if (count <= 8) return `${count} selecionadas — boa quantidade`;
+        return `${count} selecionadas — priorize as mais relevantes`;
+    }
+
+    function renderQuickSkillSuggestions() {
+        return `
+            <button class="btn-more-suggestions" data-action="open-skill-suggestions" type="button">
+                Ver sugestões
+            </button>
+        `;
+    }
+
+    function getAllUniqueSkillSuggestions() {
+        return [...new Set(Object.values(SKILL_SUGGESTION_CATEGORIES).flat())]
+            .sort((a, b) => a.localeCompare(b, "pt-BR"));
+    }
+
+    function getLiveSkillSuggestions(query, limit = 6) {
+        const normalizedQuery = normalizeSuggestionText(query);
+        if (normalizedQuery.length < 2) return [];
+
+        return getAllUniqueSkillSuggestions()
+            .filter((skill) => !isSkillAdded(skill))
+            .map((skill) => {
+                const normalizedSkill = normalizeSuggestionText(skill);
+                const words = normalizedSkill.split(/\s+/);
+                let score = 0;
+
+                if (normalizedSkill === normalizedQuery) score = 400;
+                else if (normalizedSkill.startsWith(normalizedQuery)) score = 300;
+                else if (words.some((word) => word.startsWith(normalizedQuery))) score = 200;
+                else if (normalizedSkill.includes(normalizedQuery)) score = 100;
+
+                return { skill, score };
+            })
+            .filter((entry) => entry.score > 0)
+            .sort((a, b) => b.score - a.score || a.skill.localeCompare(b.skill, "pt-BR"))
+            .slice(0, limit)
+            .map((entry) => entry.skill);
+    }
+
+    function updateLiveSkillSuggestions(value) {
+        const container = byId("skill-live-suggestions");
+        if (!container) return;
+
+        const query = String(value || "").trim();
+        const suggestions = getLiveSkillSuggestions(query);
+
+        if (normalizeSuggestionText(query).length < 2) {
+            container.hidden = true;
+            container.innerHTML = "";
+            return;
+        }
+
+        container.hidden = false;
+        container.innerHTML = suggestions.length
+            ? `
+                <p class="skill-live-title">Sugestões relacionadas</p>
+                <div class="skill-live-list" role="listbox" aria-label="Competências relacionadas ao que está sendo digitado">
+                    ${suggestions.map((skill) => `
+                        <button
+                            class="skill-live-option"
+                            data-action="add-live-skill"
+                            data-skill="${escapeHtml(skill)}"
+                            type="button"
+                            role="option"
+                        >
+                            <span>${escapeHtml(skill)}</span>
+                            <small>Adicionar</small>
+                        </button>
+                    `).join("")}
+                </div>
+            `
+            : `
+                <p class="skill-live-empty">Nenhuma sugestão encontrada. Você pode inserir “${escapeHtml(query)}” como uma competência personalizada.</p>
+            `;
+    }
+
+    function updateSkillSuggestionDialog() {
+        const dialog = byId("skill-suggestions-dialog");
+        if (!dialog) return;
+
+        const activeCategory = dialog.dataset.category || "Todas";
+        const search = normalizeSuggestionText(byId("skill-suggestion-search")?.value || "");
+        const source = activeCategory === "Todas"
+            ? getAllUniqueSkillSuggestions()
+            : (SKILL_SUGGESTION_CATEGORIES[activeCategory] || []);
+        const filtered = source.filter((skill) => normalizeSuggestionText(skill).includes(search));
+        const results = byId("skill-suggestion-results");
+        const count = byId("skill-dialog-count");
+
+        dialog.querySelectorAll("[data-skill-category]").forEach((button) => {
+            const isActive = button.dataset.skillCategory === activeCategory;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", String(isActive));
+        });
+
+        if (count) count.textContent = skillCountText();
+        if (!results) return;
+
+        results.innerHTML = filtered.length
+            ? filtered.map((skill) => {
+                const selected = isSkillAdded(skill);
+                return `
+                    <button
+                        class="skill-catalog-item ${selected ? "is-selected" : ""}"
+                        data-dialog-skill="${escapeHtml(skill)}"
+                        type="button"
+                        ${selected ? "disabled" : ""}
+                    >
+                        <span>${escapeHtml(skill)}</span>
+                        <small>${selected ? "Adicionada" : "Adicionar"}</small>
+                    </button>
+                `;
+            }).join("")
+            : '<p class="skill-no-results">Nenhuma sugestão encontrada. Você ainda pode escrever uma competência personalizada no campo principal.</p>';
+    }
+
+    function ensureSkillSuggestionDialog() {
+        let dialog = byId("skill-suggestions-dialog");
+        if (dialog) return dialog;
+
+        dialog = document.createElement("dialog");
+        dialog.id = "skill-suggestions-dialog";
+        dialog.className = "skill-suggestions-dialog";
+        dialog.dataset.category = "Todas";
+        dialog.innerHTML = `
+            <div class="skill-dialog-shell">
+                <header class="skill-dialog-header">
+                    <div>
+                        <h2>Encontre suas competências</h2>
+                        <p>Pesquise ou navegue pelas categorias. Clique para adicionar ao currículo.</p>
+                    </div>
+                    <button class="skill-dialog-close" data-dialog-action="close" type="button" aria-label="Fechar sugestões">Fechar</button>
+                </header>
+
+                <label class="skill-search-label" for="skill-suggestion-search">Buscar competência</label>
+                <input
+                    id="skill-suggestion-search"
+                    class="skill-suggestion-search"
+                    type="search"
+                    placeholder="Ex.: Excel, atendimento, estoque..."
+                    autocomplete="off"
+                />
+
+                <div class="skill-dialog-summary">
+                    <span id="skill-dialog-count">${escapeHtml(skillCountText())}</span>
+                    <span>Recomendação: 5 a 8 competências</span>
+                </div>
+
+                <div class="skill-category-tabs" aria-label="Categorias de competências">
+                    ${["Todas", ...Object.keys(SKILL_SUGGESTION_CATEGORIES)].map((category) => `
+                        <button
+                            class="skill-category-button ${category === "Todas" ? "is-active" : ""}"
+                            data-skill-category="${escapeHtml(category)}"
+                            type="button"
+                            aria-pressed="${category === "Todas"}"
+                        >${escapeHtml(category)}</button>
+                    `).join("")}
+                </div>
+
+                <div class="skill-suggestion-results" id="skill-suggestion-results"></div>
+            </div>
+        `;
+        document.body.append(dialog);
+
+        dialog.addEventListener("click", (event) => {
+            if (event.target === dialog || event.target.closest('[data-dialog-action="close"]')) {
+                dialog.close?.();
+                return;
+            }
+
+            const categoryButton = event.target.closest("[data-skill-category]");
+            if (categoryButton) {
+                dialog.dataset.category = categoryButton.dataset.skillCategory;
+                updateSkillSuggestionDialog();
+                return;
+            }
+
+            const skillButton = event.target.closest("[data-dialog-skill]");
+            if (skillButton) addSkillValue(skillButton.dataset.dialogSkill);
+        });
+        byId("skill-suggestion-search")?.addEventListener("input", updateSkillSuggestionDialog);
+        dialog.addEventListener("cancel", (event) => {
+            event.preventDefault();
+            dialog.close?.();
+        });
+        return dialog;
+    }
+
+    function openSkillSuggestionDialog() {
+        const dialog = ensureSkillSuggestionDialog();
+        dialog.dataset.category = getProfileSkillCategory();
+        const searchInput = byId("skill-suggestion-search");
+        if (searchInput) searchInput.value = "";
+        updateSkillSuggestionDialog();
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else dialog.setAttribute("open", "");
+        window.setTimeout(() => searchInput?.focus(), 50);
+    }
+
+    function addSkillValue(value) {
+        const skill = String(value || "").trim();
+        if (!skill) return false;
+        if (isSkillAdded(skill)) {
+            updateSkillSuggestionDialog();
+            return false;
+        }
+
+        App.state.value.data.competencias.push(skill);
+        App.state.save();
+        App.preview.render();
+        renderSkills(byId("interactive-content"));
+        updateSkillSuggestionDialog();
+        return true;
+    }
+
     function renderSkills(container) {
-        container.innerHTML = `
-            ${field("Adicionar competência (Ex.: Liderança, Excel)", "new-skill", "")}
-            <button class="btn-add-item" data-action="add-skill" type="button">Inserir habilidade</button>
-            <div class="added-items-list">${renderTagRows(App.state.value.data.competencias, "skill")}</div>
-        `;
-    }
-
-    function renderAdditional(container) {
         const data = App.state.value.data;
         container.innerHTML = `
-            <section class="additional-group">
-                ${field("Adicionar idioma (Ex.: Inglês - Fluente)", "new-language", "")}
-                <button class="btn-add-item" data-action="add-language" type="button">Inserir idioma</button>
-                <div class="added-items-list">${renderTagRows(data.idiomas, "language")}</div>
-            </section>
-
-            <section class="additional-group">
-                ${field("Outras informações de interesse", "new-interest", "")}
-                <button class="btn-add-item" data-action="add-interest" type="button">Inserir informação</button>
-                <div class="added-items-list">${renderTagRows(data.interesses, "interest")}</div>
-            </section>
-        `;
-    }
-
-    function renderSkillsAndAdditional(container) {
-        const data = App.state.value.data;
-        container.innerHTML = `
-            <section class="additional-group">
-                <p class="section-input-title">COMPETÊNCIAS E HABILIDADES</p>
-                <p class="section-input-helper">Adicione competências como liderança, Excel ou atendimento.</p>
+            <section class="skills-editor-block">
+                <p class="section-input-helper skills-main-helper">Adicione competências como liderança, Excel ou atendimento.</p>
                 ${field("", "new-skill", "", {
                     placeholder: "Ex.: Liderança, Excel",
                 })}
+                <div id="skill-live-suggestions" class="skill-live-suggestions" aria-live="polite" hidden></div>
                 <button class="btn-add-item" data-action="add-skill" type="button">Inserir habilidade</button>
+                ${renderQuickSkillSuggestions()}
                 <div class="added-items-list">${renderTagRows(data.competencias, "skill")}</div>
             </section>
 
@@ -243,6 +585,7 @@
         `;
     }
 
+
     function renderStepForm(stepKey, container) {
         const renderers = {
             dados_pessoais: renderPersonalData,
@@ -252,8 +595,6 @@
             formacoes: renderEducation,
             certificacoes: renderCertificates,
             competencias: renderSkills,
-            adicionais: renderAdditional,
-            competencias_adicionais: renderSkillsAndAdditional,
         };
         renderers[stepKey]?.(container);
     }
@@ -334,8 +675,12 @@
         const input = byId(`field-${fieldKey}`);
         const value = input?.value.trim();
         if (!value) return;
+        if (stateKey === "competencias") return addSkillValue(value);
+
         const list = App.state.value.data[stateKey];
-        if (!list.includes(value)) list.push(value);
+        const normalizedValue = normalizeSuggestionText(value);
+        const alreadyExists = list.some((item) => normalizeSuggestionText(item) === normalizedValue);
+        if (!alreadyExists) list.push(value);
         App.state.save();
         App.preview.render();
         renderFunction(byId("interactive-content"));
@@ -346,9 +691,9 @@
             experience: ["experiencias", renderExperiences],
             education: ["formacoes", renderEducation],
             certificate: ["certificacoes", renderCertificates],
-            skill: ["competencias", renderSkillsAndAdditional],
-            language: ["idiomas", renderSkillsAndAdditional],
-            interest: ["interesses", renderSkillsAndAdditional],
+            skill: ["competencias", renderSkills],
+            language: ["idiomas", renderSkills],
+            interest: ["interesses", renderSkills],
         };
         const [stateKey, renderFunction] = map[type] || [];
         if (!stateKey) return;
@@ -375,6 +720,10 @@
         if (key === "cpf") input.value = formatCpf(input.value);
         if (["exp-inicio", "exp-fim", "form-inicio", "form-fim", "cert-data"].includes(key)) {
             input.value = formatShortDate(input.value);
+        }
+
+        if (key === "new-skill") {
+            updateLiveSkillSuggestions(input.value);
         }
 
         if (["nome", "cargo", "email", "telefone", "local", "cpf", "resumo"].includes(key)) {
@@ -419,9 +768,12 @@
             "save-experience": saveExperience,
             "save-education": saveEducation,
             "save-certificate": saveCertificate,
-            "add-skill": () => addTag("new-skill", "competencias", renderSkillsAndAdditional),
-            "add-language": () => addTag("new-language", "idiomas", renderSkillsAndAdditional),
-            "add-interest": () => addTag("new-interest", "interesses", renderSkillsAndAdditional),
+            "add-skill": () => addTag("new-skill", "competencias", renderSkills),
+            "add-live-skill": () => addSkillValue(button.dataset.skill),
+            "add-suggested-skill": () => addSkillValue(button.dataset.skill),
+            "open-skill-suggestions": openSkillSuggestionDialog,
+            "add-language": () => addTag("new-language", "idiomas", renderSkills),
+            "add-interest": () => addTag("new-interest", "interesses", renderSkills),
         };
 
         if (actions[action]) return actions[action]();

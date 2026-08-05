@@ -20,7 +20,7 @@
             { key: "experiencias", label: "Experiência Profissional" },
             { key: "formacoes", label: "Formação Acadêmica" },
             { key: "certificacoes", label: "Certificações e Cursos" },
-            { key: "competencias_adicionais", label: "Competências, Habilidades e Informações Adicionais" },
+            { key: "competencias", label: "Competências e Habilidades" },
             { key: "modelo", label: "Escolha do Modelo" },
         ],
 
