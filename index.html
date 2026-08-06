@@ -219,9 +219,17 @@
                             <button class="btn-secondary-lg full-width btn-simulate-payment" id="btn-simulate-payment" type="button">
                                 Simular pagamento aprovado
                             </button>
-                            <button class="btn-primary-lg full-width btn-download-pdf" id="btn-print" type="button" disabled>
-                                Aguardando simulação
-                            </button>
+                            <div class="payment-output-actions" aria-label="Opções para obter o currículo">
+                                <button class="btn-secondary-lg full-width btn-print-curriculum" id="btn-print" type="button" disabled>
+                                    Imprimir currículo
+                                </button>
+                                <button class="btn-primary-lg full-width btn-download-pdf" id="btn-download-pdf" type="button" disabled>
+                                    Baixar PDF
+                                </button>
+                            </div>
+                            <p class="payment-output-helper">
+                                “Imprimir” abre a área de impressão. “Baixar PDF” salva o arquivo diretamente no aparelho.
+                            </p>
                             <button class="btn-payment-back" id="btn-back-payment" type="button">
                                 Voltar
                             </button>
@@ -320,7 +328,7 @@
                             </section>
 
                             <section class="cv-section-main is-hidden" id="cv-interesses-box">
-                                <h2>Áreas de Interesse</h2>
+                                <h2>Informações Adicionais</h2>
                                 <ul id="cv-interesses" class="plain-list"></ul>
                             </section>
                         </div>
@@ -358,6 +366,8 @@
         <script src="js/ui/forms.js"></script>
         <script src="js/ui/steps.js"></script>
         <script src="js/ui/payment.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"></script>
         <script src="js/ui/print.js"></script>
         <script src="js/app.js"></script>
     </body>

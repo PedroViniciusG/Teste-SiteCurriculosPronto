@@ -147,3 +147,33 @@
     cursor: not-allowed;
     background: #3f3f46;
 }
+
+.payment-output-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.btn-print-curriculum {
+    background: #26262b;
+    border-color: #3f3f46;
+    color: #fff;
+}
+
+.btn-print-curriculum:hover:not(:disabled) {
+    background: #323239;
+}
+
+.payment-output-helper {
+    margin: 10px 0 0 !important;
+    color: #71717a !important;
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+}
+
+.btn-print-curriculum:disabled,
+.btn-download-pdf:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}

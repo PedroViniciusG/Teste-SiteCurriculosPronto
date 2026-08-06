@@ -211,3 +211,30 @@
         min-height: 46px;
     }
 }
+
+@media screen and (max-width: 520px) {
+    .location-grid {
+        grid-template-columns: minmax(0, 1fr) 92px;
+        gap: 10px;
+    }
+
+    .reorderable-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+
+    .added-item-content {
+        flex-basis: calc(100% - 10px);
+    }
+
+    .item-actions-group {
+        width: 100%;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .payment-output-actions {
+        grid-template-columns: 1fr;
+    }
+}

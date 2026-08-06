@@ -103,6 +103,35 @@
         ],
     });
 
+
+
+    const BRAZILIAN_STATES = Object.freeze([
+        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS",
+        "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC",
+        "SP", "SE", "TO",
+    ]);
+
+    const EDUCATION_TYPES = Object.freeze([
+        "Ensino Fundamental",
+        "Ensino Médio",
+        "Ensino Médio Técnico",
+        "Curso Técnico",
+        "Tecnólogo",
+        "Graduação / Ensino Superior",
+        "Pós-graduação",
+        "MBA",
+        "Mestrado",
+        "Doutorado",
+        "Outro",
+    ]);
+
+    const LANGUAGE_LEVELS = Object.freeze([
+        { value: "Básico", label: "Básico", description: "Compreende e utiliza palavras e frases simples." },
+        { value: "Intermediário", label: "Intermediário", description: "Mantém conversas do dia a dia e entende textos comuns." },
+        { value: "Avançado", label: "Avançado", description: "Comunica-se com segurança em situações profissionais." },
+        { value: "Fluente", label: "Fluente", description: "Fala e compreende com naturalidade e pouca limitação." },
+        { value: "Nativo / Bilíngue", label: "Nativo / Bilíngue", description: "Possui domínio completo, equivalente a um falante nativo." },
+    ]);
     const ROLE_CATEGORY_RULES = Object.freeze([
         { category: "Logística", words: ["logistica", "estoque", "almoxarif", "expedicao", "conferente", "armaz", "empilhadeira", "transport"] },
         { category: "Atendimento e vendas", words: ["atendimento", "venda", "vendedor", "recepc", "telemarketing", "comercial", "caixa", "loja"] },
@@ -136,6 +165,122 @@
         `;
     }
 
+    function selectField(label, key, value, options, placeholder = "Selecione") {
+        return `
+            <div class="input-sub-group">
+                <label for="field-${key}">${label}</label>
+                <select id="field-${key}" data-field="${key}">
+                    <option value="">${escapeHtml(placeholder)}</option>
+                    ${options.map((option) => `
+                        <option value="${escapeHtml(option)}" ${option === value ? "selected" : ""}>
+                            ${escapeHtml(option)}
+                        </option>
+                    `).join("")}
+                </select>
+            </div>
+        `;
+    }
+
+    function customSelectField(label, key, value, options, placeholder = "Selecione", settings = {}) {
+        const normalizedOptions = options.map((option) => (
+            typeof option === "string" ? { value: option, label: option, description: "" } : option
+        ));
+        const selected = normalizedOptions.find((option) => option.value === value);
+        const compactClass = settings.compact ? " is-compact" : "";
+        const menuId = `custom-select-menu-${key}`;
+
+        return `
+            <div class="input-sub-group custom-select-group${compactClass}">
+                <label id="custom-select-label-${key}" for="custom-select-trigger-${key}">${label}</label>
+                <div class="custom-select" data-custom-select>
+                    <input id="field-${key}" type="hidden" data-field="${key}" value="${escapeHtml(value || "")}" />
+                    <button
+                        id="custom-select-trigger-${key}"
+                        class="custom-select-trigger"
+                        data-action="toggle-custom-select"
+                        type="button"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        aria-controls="${menuId}"
+                        aria-labelledby="custom-select-label-${key} custom-select-value-${key}"
+                    >
+                        <span class="custom-select-trigger-copy" id="custom-select-value-${key}">
+                            <strong>${escapeHtml(selected?.label || placeholder)}</strong>
+                        </span>
+                        <span class="custom-select-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="custom-select-menu" id="${menuId}" role="listbox" aria-labelledby="custom-select-label-${key}" hidden>
+                        ${normalizedOptions.map((option) => `
+                            <button
+                                class="custom-select-option ${option.value === value ? "is-selected" : ""}"
+                                data-action="select-custom-option"
+                                data-field-key="${key}"
+                                data-value="${escapeHtml(option.value)}"
+                                data-label="${escapeHtml(option.label)}"
+                                type="button"
+                                role="option"
+                                aria-selected="${option.value === value}"
+                            >
+                                <span class="custom-select-option-copy">
+                                    <strong>${escapeHtml(option.label)}</strong>
+                                    ${option.description ? `<small>${escapeHtml(option.description)}</small>` : ""}
+                                </span>
+                                <span class="custom-select-option-check" aria-hidden="true">✓</span>
+                            </button>
+                        `).join("")}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function closeCustomSelects(except = null) {
+        document.querySelectorAll("[data-custom-select].is-open").forEach((select) => {
+            if (select === except) return;
+            select.classList.remove("is-open");
+            select.querySelector(".custom-select-trigger")?.setAttribute("aria-expanded", "false");
+            const menu = select.querySelector(".custom-select-menu");
+            if (menu) menu.hidden = true;
+        });
+    }
+
+    function toggleCustomSelect(trigger) {
+        const select = trigger.closest("[data-custom-select]");
+        const menu = select?.querySelector(".custom-select-menu");
+        if (!select || !menu) return;
+
+        const willOpen = !select.classList.contains("is-open");
+        closeCustomSelects(select);
+        select.classList.toggle("is-open", willOpen);
+        trigger.setAttribute("aria-expanded", String(willOpen));
+        menu.hidden = !willOpen;
+
+        if (willOpen) {
+            const selectedOption = menu.querySelector(".custom-select-option.is-selected");
+            window.setTimeout(() => (selectedOption || menu.querySelector(".custom-select-option"))?.focus(), 0);
+        }
+    }
+
+    function selectCustomOption(option) {
+        const select = option.closest("[data-custom-select]");
+        const fieldKey = option.dataset.fieldKey;
+        const hiddenInput = byId(`field-${fieldKey}`);
+        const trigger = select?.querySelector(".custom-select-trigger");
+        const current = select?.querySelector(".custom-select-trigger-copy strong");
+        if (!select || !fieldKey || !hiddenInput || !trigger || !current) return;
+
+        hiddenInput.value = option.dataset.value || "";
+        current.textContent = option.dataset.label || option.dataset.value || "Selecione";
+        select.querySelectorAll(".custom-select-option").forEach((item) => {
+            const selectedOption = item === option;
+            item.classList.toggle("is-selected", selectedOption);
+            item.setAttribute("aria-selected", String(selectedOption));
+        });
+        hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
+        closeCustomSelects();
+        trigger.focus();
+    }
+
     function textarea(label, key, value, placeholder = "") {
         return `
             <div class="input-sub-group">
@@ -147,14 +292,17 @@
 
     function renderPersonalData(container) {
         const data = App.state.value.data;
-        container.innerHTML = [
-            field("Nome Completo", "nome", data.nome),
-            field("Cargo / Profissão", "cargo", data.cargo),
-            field("E-mail", "email", data.email, { type: "email", inputMode: "email" }),
-            field("Telefone", "telefone", data.telefone, { inputMode: "tel" }),
-            field("Cidade / Estado", "local", data.local),
-            field("CPF (Opcional)", "cpf", data.cpf, { inputMode: "numeric" }),
-        ].join("");
+        container.innerHTML = `
+            ${field("Nome Completo", "nome", data.nome)}
+            ${field("Cargo / Profissão", "cargo", data.cargo)}
+            ${field("E-mail", "email", data.email, { type: "email", inputMode: "email" })}
+            ${field("Telefone", "telefone", data.telefone, { inputMode: "tel" })}
+            <div class="location-grid">
+                ${field("Cidade", "cidade", data.cidade, { placeholder: "Ex.: Juiz de Fora" })}
+                ${customSelectField("Estado", "estado", data.estado, BRAZILIAN_STATES, "UF", { compact: true })}
+            </div>
+            ${field("CPF (Opcional)", "cpf", data.cpf, { inputMode: "numeric" })}
+        `;
     }
 
     function renderPhoto(container) {
@@ -198,12 +346,31 @@
         `;
     }
 
-    function itemActions(type, index) {
+    function itemActions(type, index, total, orderable = false) {
         return `
             <div class="item-actions-group">
+                ${orderable ? `
+                    <button class="btn-move-item" data-action="move-${type}-up" data-index="${index}" type="button" aria-label="Mover para cima" ${index === 0 ? "disabled" : ""}>↑</button>
+                    <button class="btn-move-item" data-action="move-${type}-down" data-index="${index}" type="button" aria-label="Mover para baixo" ${index === total - 1 ? "disabled" : ""}>↓</button>
+                ` : ""}
                 <button class="btn-edit-item" data-action="edit-${type}" data-index="${index}" type="button">Editar</button>
                 <button class="btn-remove-item" data-action="remove-${type}" data-index="${index}" type="button">Remover</button>
             </div>
+        `;
+    }
+
+    function reorderableRow(type, index, total, content) {
+        return `
+            <article
+                class="added-item-row reorderable-item"
+                draggable="true"
+                data-reorder-type="${type}"
+                data-index="${index}"
+            >
+                <button class="drag-handle" data-drag-handle type="button" aria-label="Arraste para reordenar" title="Arraste para reordenar">⋮⋮</button>
+                <span class="added-item-content">${content}</span>
+                ${itemActions(type, index, total, true)}
+            </article>
         `;
     }
 
@@ -211,6 +378,7 @@
         const state = App.state.value;
         const editing = state.editing.experiencia;
         const item = editing >= 0 ? state.data.experiencias[editing] : {};
+        const total = state.data.experiencias.length;
 
         container.innerHTML = `
             <div class="editor-card">
@@ -222,13 +390,14 @@
                     ${editing >= 0 ? "Atualizar experiência" : "Salvar experiência"}
                 </button>
             </div>
-            <div class="added-items-list">
-                ${state.data.experiencias.map((entry, index) => `
-                    <article class="added-item-row">
-                        <span><strong>${escapeHtml(entry.cargo)}</strong> em ${escapeHtml(entry.empresa)}</span>
-                        ${itemActions("experience", index)}
-                    </article>
-                `).join("")}
+            ${total ? '<p class="reorder-helper">Arraste as experiências ou use as setas para definir a ordem exibida no currículo.</p>' : ""}
+            <div class="added-items-list reorder-list" data-reorder-list="experience">
+                ${state.data.experiencias.map((entry, index) => reorderableRow(
+                    "experience",
+                    index,
+                    total,
+                    `<strong>${escapeHtml(entry.cargo)}</strong> em ${escapeHtml(entry.empresa)}`,
+                )).join("")}
             </div>
         `;
         syncCurrentCheckbox("exp");
@@ -238,23 +407,29 @@
         const state = App.state.value;
         const editing = state.editing.formacao;
         const item = editing >= 0 ? state.data.formacoes[editing] : {};
+        const total = state.data.formacoes.length;
 
         container.innerHTML = `
             <div class="editor-card">
-                ${field("Curso / Graduação", "form-curso", item.curso || "")}
+                ${selectField("Tipo de formação", "form-tipo", item.tipo || "", EDUCATION_TYPES, "Selecione o nível")}
+                ${field("Curso / Área (quando aplicável)", "form-curso", item.curso || "", { placeholder: "Ex.: Logística, Administração" })}
                 ${field("Instituição", "form-inst", item.inst || "")}
                 ${renderDateFields("form", item)}
                 <button class="btn-add-item" data-action="save-education" type="button">
                     ${editing >= 0 ? "Atualizar formação" : "Salvar formação"}
                 </button>
             </div>
-            <div class="added-items-list">
-                ${state.data.formacoes.map((entry, index) => `
-                    <article class="added-item-row">
-                        <span><strong>${escapeHtml(entry.curso)}</strong> — ${escapeHtml(entry.inst)}</span>
-                        ${itemActions("education", index)}
-                    </article>
-                `).join("")}
+            ${total ? '<p class="reorder-helper">Arraste as formações ou use as setas para ajustar a ordem no currículo.</p>' : ""}
+            <div class="added-items-list reorder-list" data-reorder-list="education">
+                ${state.data.formacoes.map((entry, index) => {
+                    const title = [entry.tipo, entry.curso].filter(Boolean).join(" — ") || "Formação";
+                    return reorderableRow(
+                        "education",
+                        index,
+                        total,
+                        `<strong>${escapeHtml(title)}</strong> — ${escapeHtml(entry.inst)}`,
+                    );
+                }).join("")}
             </div>
         `;
         syncCurrentCheckbox("form");
@@ -498,9 +673,14 @@
         `;
         document.body.append(dialog);
 
+        const closeDialog = () => {
+            if (typeof dialog.close === "function") dialog.close();
+            else dialog.removeAttribute("open");
+        };
+
         dialog.addEventListener("click", (event) => {
             if (event.target === dialog || event.target.closest('[data-dialog-action="close"]')) {
-                dialog.close?.();
+                closeDialog();
                 return;
             }
 
@@ -517,7 +697,7 @@
         byId("skill-suggestion-search")?.addEventListener("input", updateSkillSuggestionDialog);
         dialog.addEventListener("cancel", (event) => {
             event.preventDefault();
-            dialog.close?.();
+            closeDialog();
         });
         return dialog;
     }
@@ -565,10 +745,19 @@
 
             <section class="additional-group">
                 <p class="section-input-title">IDIOMAS</p>
-                <p class="section-input-helper">Informe o idioma e o nível. Ex.: Inglês — Fluente.</p>
-                ${field("", "new-language", "", {
-                    placeholder: "Ex.: Inglês - Fluente",
-                })}
+                <p class="section-input-helper">Digite o idioma e escolha o nível que melhor representa seu domínio.</p>
+                <div class="language-entry-grid">
+                    ${field("Idioma", "new-language", "", {
+                        placeholder: "Ex.: Inglês",
+                    })}
+                    ${customSelectField(
+                        "Nível de proficiência",
+                        "new-language-level",
+                        "",
+                        LANGUAGE_LEVELS,
+                        "Selecione o nível",
+                    )}
+                </div>
                 <button class="btn-add-item" data-action="add-language" type="button">Inserir idioma</button>
                 <div class="added-items-list">${renderTagRows(data.idiomas, "language")}</div>
             </section>
@@ -616,7 +805,11 @@
         if (!empresa || !cargo) return App.feedback.showError("Preencha Empresa e Cargo.");
 
         const current = document.querySelector('[data-current-checkbox="exp"]')?.checked || false;
+        const previous = App.state.value.editing.experiencia >= 0
+            ? App.state.value.data.experiencias[App.state.value.editing.experiencia]
+            : null;
         const item = {
+            id: previous?.id || App.utils.createId("exp"),
             empresa,
             cargo,
             inicio: inputValue("exp-inicio"),
@@ -635,12 +828,18 @@
     }
 
     function saveEducation() {
+        const tipo = inputValue("form-tipo");
         const curso = inputValue("form-curso");
         const inst = inputValue("form-inst");
-        if (!curso || !inst) return App.feedback.showError("Preencha o Curso e a Instituição.");
+        if (!tipo || !inst) return App.feedback.showError("Selecione o tipo de formação e informe a instituição.");
 
         const current = document.querySelector('[data-current-checkbox="form"]')?.checked || false;
+        const previous = App.state.value.editing.formacao >= 0
+            ? App.state.value.data.formacoes[App.state.value.editing.formacao]
+            : null;
         const item = {
+            id: previous?.id || App.utils.createId("form"),
+            tipo,
             curso,
             inst,
             inicio: inputValue("form-inicio"),
@@ -686,6 +885,149 @@
         renderFunction(byId("interactive-content"));
     }
 
+    function getLanguageName(entry) {
+        return String(entry || "").split(/\s*[—–-]\s*/)[0].trim();
+    }
+
+    function addLanguage() {
+        const language = inputValue("new-language");
+        const level = inputValue("new-language-level");
+        if (!language) return App.feedback.showError("Informe o idioma.");
+        if (!level) return App.feedback.showError("Selecione o nível de proficiência.");
+
+        const formattedLanguage = `${language} — ${level}`;
+        const languages = App.state.value.data.idiomas;
+        const normalizedLanguage = normalizeSuggestionText(language);
+        const existingIndex = languages.findIndex(
+            (item) => normalizeSuggestionText(getLanguageName(item)) === normalizedLanguage,
+        );
+
+        if (existingIndex >= 0) languages[existingIndex] = formattedLanguage;
+        else languages.push(formattedLanguage);
+
+        App.state.save();
+        App.preview.render();
+        renderSkills(byId("interactive-content"));
+    }
+
+    function reorderCollection(type, fromIndex, toIndex) {
+        const map = {
+            experience: ["experiencias", "experiencia", renderExperiences],
+            education: ["formacoes", "formacao", renderEducation],
+        };
+        const [stateKey, editingKey, renderFunction] = map[type] || [];
+        const list = App.state.value.data[stateKey];
+        if (!list || fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || toIndex >= list.length) return;
+
+        const [moved] = list.splice(fromIndex, 1);
+        list.splice(toIndex, 0, moved);
+        App.state.value.editing[editingKey] = -1;
+        App.state.save();
+        App.preview.render();
+        renderFunction(byId("interactive-content"));
+    }
+
+    function moveItem(type, index, direction) {
+        reorderCollection(type, index, index + direction);
+    }
+
+    let draggedItem = null;
+
+    function handleDragStart(event) {
+        const row = event.target.closest("[data-reorder-type]");
+        if (!row) return;
+        draggedItem = {
+            type: row.dataset.reorderType,
+            index: Number(row.dataset.index),
+        };
+        row.classList.add("is-dragging");
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", `${draggedItem.type}:${draggedItem.index}`);
+    }
+
+    function handleDragOver(event) {
+        const row = event.target.closest("[data-reorder-type]");
+        if (!row || !draggedItem || row.dataset.reorderType !== draggedItem.type) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        row.classList.add("is-drag-target");
+    }
+
+    function handleDragLeave(event) {
+        event.target.closest("[data-reorder-type]")?.classList.remove("is-drag-target");
+    }
+
+    function handleDrop(event) {
+        const row = event.target.closest("[data-reorder-type]");
+        if (!row || !draggedItem || row.dataset.reorderType !== draggedItem.type) return;
+        event.preventDefault();
+        const targetIndex = Number(row.dataset.index);
+        const { type, index } = draggedItem;
+        draggedItem = null;
+        reorderCollection(type, index, targetIndex);
+    }
+
+    function handleDragEnd() {
+        document.querySelectorAll(".reorderable-item").forEach((row) => {
+            row.classList.remove("is-dragging", "is-drag-target");
+        });
+        draggedItem = null;
+    }
+
+    let pointerDrag = null;
+
+    function clearPointerDrag() {
+        document.querySelectorAll(".reorderable-item").forEach((row) => {
+            row.classList.remove("is-dragging", "is-drag-target");
+        });
+        pointerDrag = null;
+    }
+
+    function handlePointerDown(event) {
+        const handle = event.target.closest("[data-drag-handle]");
+        const row = handle?.closest("[data-reorder-type]");
+        if (!handle || !row || event.pointerType === "mouse") return;
+
+        pointerDrag = {
+            type: row.dataset.reorderType,
+            fromIndex: Number(row.dataset.index),
+            toIndex: Number(row.dataset.index),
+            startY: event.clientY,
+            active: false,
+            handle,
+        };
+        handle.setPointerCapture?.(event.pointerId);
+    }
+
+    function handlePointerMove(event) {
+        if (!pointerDrag) return;
+        if (!pointerDrag.active && Math.abs(event.clientY - pointerDrag.startY) < 8) return;
+
+        pointerDrag.active = true;
+        event.preventDefault();
+        const source = document.querySelector(
+            `[data-reorder-type="${pointerDrag.type}"][data-index="${pointerDrag.fromIndex}"]`,
+        );
+        source?.classList.add("is-dragging");
+
+        document.querySelectorAll(".reorderable-item.is-drag-target")
+            .forEach((row) => row.classList.remove("is-drag-target"));
+
+        const target = document.elementFromPoint(event.clientX, event.clientY)
+            ?.closest(`[data-reorder-type="${pointerDrag.type}"]`);
+        if (!target) return;
+        pointerDrag.toIndex = Number(target.dataset.index);
+        target.classList.add("is-drag-target");
+    }
+
+    function handlePointerEnd(event) {
+        if (!pointerDrag) return;
+        const { type, fromIndex, toIndex, active, handle } = pointerDrag;
+        handle.releasePointerCapture?.(event.pointerId);
+        clearPointerDrag();
+        if (active && fromIndex !== toIndex) reorderCollection(type, fromIndex, toIndex);
+    }
+
     function removeItem(type, index) {
         const map = {
             experience: ["experiencias", renderExperiences],
@@ -726,7 +1068,7 @@
             updateLiveSkillSuggestions(input.value);
         }
 
-        if (["nome", "cargo", "email", "telefone", "local", "cpf", "resumo"].includes(key)) {
+        if (["nome", "cargo", "email", "telefone", "cidade", "cpf", "resumo"].includes(key)) {
             App.state.updateField(key, input.value);
         }
     }
@@ -741,6 +1083,12 @@
                 renderPhoto(byId("interactive-content"));
             });
             reader.readAsDataURL(file);
+            return;
+        }
+
+        const changedField = event.target.dataset.field;
+        if (changedField === "estado") {
+            App.state.updateField("estado", event.target.value);
             return;
         }
 
@@ -761,6 +1109,8 @@
         const index = Number(button.dataset.index);
 
         const actions = {
+            "toggle-custom-select": () => toggleCustomSelect(button),
+            "select-custom-option": () => selectCustomOption(button),
             "remove-photo": () => {
                 App.state.updateField("foto", "");
                 renderPhoto(byId("interactive-content"));
@@ -772,11 +1122,13 @@
             "add-live-skill": () => addSkillValue(button.dataset.skill),
             "add-suggested-skill": () => addSkillValue(button.dataset.skill),
             "open-skill-suggestions": openSkillSuggestionDialog,
-            "add-language": () => addTag("new-language", "idiomas", renderSkills),
+            "add-language": addLanguage,
             "add-interest": () => addTag("new-interest", "interesses", renderSkills),
         };
 
         if (actions[action]) return actions[action]();
+        const moveMatch = action.match(/^move-(experience|education)-(up|down)$/);
+        if (moveMatch) return moveItem(moveMatch[1], index, moveMatch[2] === "up" ? -1 : 1);
         if (action.startsWith("remove-")) return removeItem(action.replace("remove-", ""), index);
         if (action.startsWith("edit-")) return editItem(action.replace("edit-", ""), index);
     }
@@ -802,6 +1154,22 @@
         container?.addEventListener("change", handleChange);
         container?.addEventListener("click", handleClick);
         container?.addEventListener("keydown", handleKeydown);
+        container?.addEventListener("dragstart", handleDragStart);
+        container?.addEventListener("dragover", handleDragOver);
+        container?.addEventListener("dragleave", handleDragLeave);
+        container?.addEventListener("drop", handleDrop);
+        container?.addEventListener("dragend", handleDragEnd);
+        container?.addEventListener("pointerdown", handlePointerDown);
+        container?.addEventListener("pointermove", handlePointerMove);
+        container?.addEventListener("pointerup", handlePointerEnd);
+        container?.addEventListener("pointercancel", handlePointerEnd);
+
+        document.addEventListener("click", (event) => {
+            if (!event.target.closest("[data-custom-select]")) closeCustomSelects();
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") closeCustomSelects();
+        });
     }
 
     App.forms = { renderStepForm, bindEvents };

@@ -41,6 +41,7 @@
         byId("btn-copy-pix")?.addEventListener("click", App.payment.copyPix);
         byId("btn-simulate-payment")?.addEventListener("click", App.payment.simulateApproval);
         byId("btn-print")?.addEventListener("click", App.print.open);
+        byId("btn-download-pdf")?.addEventListener("click", App.print.download);
 
         // Em telas pequenas, a prévia abre em uma camada separada.
         // O módulo abaixo calcula a escala pela largura real do aparelho,

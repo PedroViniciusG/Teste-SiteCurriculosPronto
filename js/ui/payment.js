@@ -11,6 +11,13 @@
     const { byId, setVisible } = App.utils;
     let paymentApproved = false;
 
+    function setOutputButtonsEnabled(enabled) {
+        const printButton = byId("btn-print");
+        const downloadButton = byId("btn-download-pdf");
+        if (printButton) printButton.disabled = !enabled;
+        if (downloadButton) downloadButton.disabled = !enabled;
+    }
+
     function open() {
         App.state.save();
         setVisible(byId("box-escolha-modelo"), false);
@@ -40,7 +47,6 @@
         const loading = byId("pix-qr-loading");
         const pixCode = byId("pix-code");
         const copyButton = byId("btn-copy-pix");
-        const printButton = byId("btn-print");
         const simulateButton = byId("btn-simulate-payment");
 
         if (qrImage) {
@@ -50,11 +56,11 @@
         setVisible(loading, false);
         if (pixCode) pixCode.value = "PIX-TESTE-CURRICULOS-1R-SEM-VALOR-REAL";
         if (copyButton) copyButton.disabled = false;
-        if (simulateButton) simulateButton.disabled = false;
-        if (printButton) {
-            printButton.disabled = true;
-            printButton.textContent = "Aguardando simulação";
+        if (simulateButton) {
+            simulateButton.disabled = false;
+            simulateButton.textContent = "Simular pagamento aprovado";
         }
+        setOutputButtonsEnabled(false);
         setStatus("Pagamento de demonstração criado. Clique em “Simular pagamento aprovado”.");
     }
 
@@ -68,12 +74,8 @@
 
         global.setTimeout(() => {
             paymentApproved = true;
-            setStatus("Pagamento de teste aprovado! O PDF foi liberado.", "approved");
-            const printButton = byId("btn-print");
-            if (printButton) {
-                printButton.disabled = false;
-                printButton.textContent = "Baixar currículo em PDF";
-            }
+            setStatus("Pagamento de teste aprovado! As opções de impressão e download foram liberadas.", "approved");
+            setOutputButtonsEnabled(true);
             if (simulateButton) simulateButton.textContent = "Pagamento de teste aprovado";
         }, App.config.payment.simulationDelayMs);
     }
@@ -113,5 +115,6 @@
         simulateApproval,
         copyPix,
         canDownload,
+        setStatus,
     };
 })(window);

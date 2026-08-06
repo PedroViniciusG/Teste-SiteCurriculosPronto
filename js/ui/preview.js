@@ -24,6 +24,10 @@
         });
     }
 
+    function locationText(data) {
+        return [data.cidade, data.estado].filter(Boolean).join(" - ") || data.local || "";
+    }
+
     function renderContact(data) {
         const contact = byId("cv-contato-lista");
         if (!contact) return;
@@ -31,7 +35,7 @@
         const rows = [
             data.telefone && `Tel.: ${data.telefone}`,
             data.email && `E-mail: ${data.email}`,
-            data.local && data.local,
+            locationText(data),
             data.cpf && `CPF: ${data.cpf}`,
         ].filter(Boolean);
 
@@ -56,6 +60,41 @@
         return paragraph;
     }
 
+    function normalizeCompany(value) {
+        return String(value || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    /**
+     * Agrupa cargos com o mesmo nome de empresa, preservando a ordem definida
+     * pelo usuário. A empresa é exibida uma única vez, como no LinkedIn.
+     */
+    function groupExperiences(experiences) {
+        const groups = [];
+        const byCompany = new Map();
+
+        experiences.forEach((experience) => {
+            const key = normalizeCompany(experience.empresa) || `sem-empresa-${experience.id}`;
+            let group = byCompany.get(key);
+            if (!group) {
+                group = { empresa: experience.empresa, roles: [] };
+                byCompany.set(key, group);
+                groups.push(group);
+            }
+            group.roles.push(experience);
+        });
+        return groups;
+    }
+
+    function dateRange(item) {
+        const values = [item.inicio, item.fim].filter(Boolean);
+        return values.join(" - ");
+    }
+
     function renderExperience(data) {
         const container = byId("cv-experiencias-container");
         if (!container) return;
@@ -66,27 +105,44 @@
             return;
         }
 
-        data.experiencias.forEach((item) => {
-            const article = document.createElement("article");
-            article.className = "cv-item-render";
+        groupExperiences(data.experiencias).forEach((group) => {
+            const company = document.createElement("article");
+            company.className = "cv-company-group";
 
-            const heading = document.createElement("div");
-            heading.className = "cv-item-meta";
-            heading.innerHTML = `<strong>${App.utils.escapeHtml(item.cargo)}</strong><span>${App.utils.escapeHtml(item.inicio)}${item.inicio || item.fim ? " - " : ""}${App.utils.escapeHtml(item.fim)}</span>`;
+            const companyName = document.createElement("div");
+            companyName.className = "cv-company-heading";
+            companyName.textContent = group.empresa;
+            company.appendChild(companyName);
 
-            const institution = document.createElement("div");
-            institution.className = "cv-item-institution";
-            institution.textContent = item.empresa;
+            group.roles.forEach((item) => {
+                const role = document.createElement("div");
+                role.className = "cv-company-role";
 
-            article.append(heading, institution);
-            if (item.desc) {
-                const description = document.createElement("p");
-                description.className = "cv-item-description";
-                description.textContent = item.desc;
-                article.appendChild(description);
-            }
-            container.appendChild(article);
+                const heading = document.createElement("div");
+                heading.className = "cv-item-meta";
+
+                const title = document.createElement("strong");
+                title.textContent = item.cargo;
+                const dates = document.createElement("span");
+                dates.textContent = dateRange(item);
+                heading.append(title, dates);
+                role.appendChild(heading);
+
+                if (item.desc) {
+                    const description = document.createElement("p");
+                    description.className = "cv-item-description";
+                    description.textContent = item.desc;
+                    role.appendChild(description);
+                }
+                company.appendChild(role);
+            });
+            container.appendChild(company);
         });
+    }
+
+    function educationTitle(item) {
+        const parts = [item.tipo, item.curso].filter(Boolean);
+        return parts.join(" — ") || "Formação";
     }
 
     function renderEducation(data) {
@@ -102,13 +158,20 @@
         data.formacoes.forEach((item) => {
             const article = document.createElement("article");
             article.className = "cv-item-render";
-            article.innerHTML = `
-                <div class="cv-item-meta">
-                    <strong>${App.utils.escapeHtml(item.curso)}</strong>
-                    <span>${App.utils.escapeHtml(item.inicio)}${item.inicio || item.fim ? " - " : ""}${App.utils.escapeHtml(item.fim)}</span>
-                </div>
-                <div class="cv-item-institution">${App.utils.escapeHtml(item.inst)}</div>
-            `;
+
+            const meta = document.createElement("div");
+            meta.className = "cv-item-meta";
+            const title = document.createElement("strong");
+            title.textContent = educationTitle(item);
+            const dates = document.createElement("span");
+            dates.textContent = dateRange(item);
+            meta.append(title, dates);
+
+            const institution = document.createElement("div");
+            institution.className = "cv-item-institution";
+            institution.textContent = item.inst;
+
+            article.append(meta, institution);
             container.appendChild(article);
         });
     }
