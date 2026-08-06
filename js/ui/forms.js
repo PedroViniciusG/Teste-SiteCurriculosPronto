@@ -411,7 +411,7 @@
 
         container.innerHTML = `
             <div class="editor-card">
-                ${selectField("Tipo de formação", "form-tipo", item.tipo || "", EDUCATION_TYPES, "Selecione o nível")}
+                ${customSelectField("Tipo de formação", "form-tipo", item.tipo || "", EDUCATION_TYPES, "Selecione o nível")}
                 ${field("Curso / Área (quando aplicável)", "form-curso", item.curso || "", { placeholder: "Ex.: Logística, Administração" })}
                 ${field("Instituição", "form-inst", item.inst || "")}
                 ${renderDateFields("form", item)}
